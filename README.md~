@@ -10,3 +10,15 @@ Tocar samplers da lista.
 Build in Qt 5.15.2 , SO Linux.
 ```
 
+#### Testes
+<<<<<<< HEAD
+![Alt text](./blob/tests1.png?raw=true "Testes")
+
+#### Telas
+![Alt text](./blob/login.png?raw=true "Inicial")
+=======
+![plot](./blob/tests1.png)
+https://github.com/jailsonlinux/jpotify/tree/master/blob/tests1.png
+![Alt text](./blob/tests1.png?raw=true "Testes")
+
+>>>>>>> 14fb42c5d1b84d6aa1eeea584be79c3c7fbe8f69
