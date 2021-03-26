@@ -10,7 +10,6 @@
 #include "playlist.h"
 #include "playlists.h"
 
-class Track;
 class Playlists;
 
 class PlaylistDao : public AbstractDao

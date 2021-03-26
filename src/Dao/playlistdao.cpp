@@ -3,7 +3,7 @@
 /**
  * @brief PlaylistDao::PlaylistDao
  * @param userid
- * contrucao da playlist está associada a um usuário cadastrado.
+ * construção da playlist está associada a um usuário cadastrado.
  */
 PlaylistDao::PlaylistDao(const int userid) :
     m_tablename(QStringLiteral("playlist")),
@@ -215,7 +215,7 @@ QString PlaylistDao::getQueryStr(AbstractDao::TypeQuery type)
     queryStr += QStringLiteral(" FROM %1  WHERE userid = %2 ").arg(m_tablename).arg(m_userid);
 
     if(type == TypeQuery::All){
-        qInfo() << "Retornando todos os dados da tabela.";
+        qInfo() << "Retornando consulta para todos os dados da tabela.";
     }
 
     return queryStr;
