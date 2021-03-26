@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 1134 340"
+   class="spotify-logo--text"
+   version="1.1"
+   id="svg869"
+   sodipodi:docname="logo.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   inkscape:export-filename="/home/jailson2/Estudos/Qt/JPotify/resources/images/logo.png"
+   inkscape:export-xdpi="19.714285"
+   inkscape:export-ydpi="19.714285">
+  <metadata
+     id="metadata875">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Spotify</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs873" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1056"
+     id="namedview871"
+     showgrid="false"
+     inkscape:zoom="0.40936869"
+     inkscape:cx="2162.1652"
+     inkscape:cy="-122.04988"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg869" />
+  <title
+     id="title865">Spotify</title>
+  <path
+     style="fill:#000000;stroke:#ffffff"
+     d="M 176 4 C 84 4 8 79 8 171 C 8 263 84 339 176 339 C 268 339 344 263 344 171 C 344 79 268 4 176 4 z M 131.97461 68.080078 C 135.36143 68.31662 138.60969 70.927319 137.68164 75.103516 C 130.66976 104.38845 111.28387 129.54708 78.699219 149.75781 C 72.924726 153.88245 65.500187 144.80894 72.099609 139.85938 C 101.38455 121.29849 119.53179 98.20007 125.71875 72.214844 C 126.62102 69.147144 129.34042 67.896101 131.97461 68.080078 z M 175.83398 68.271484 C 181.96806 68.217774 188.26727 72.78264 186.58789 80.339844 C 174.56708 130.54443 141.33214 173.67794 85.470703 208.32617 C 75.571209 215.39724 62.842542 199.84075 74.15625 191.35547 C 124.36084 159.53566 155.47347 119.93836 166.08008 75.390625 C 167.51639 70.507169 171.63698 68.308234 175.83398 68.271484 z M 221.66992 85.462891 C 229.35505 85.272648 237.47617 91.191222 235.37695 100.84766 C 221.23481 160.24463 174.56652 219.64128 118.70508 250.04688 C 104.56295 258.53215 90.420217 235.90325 105.97656 227.41797 C 154.76693 201.25501 197.90104 146.80825 209.92188 95.189453 C 211.35818 88.582424 216.41168 85.593056 221.66992 85.462891 z M 276.1582 106.45898 C 285.69983 106.54673 295.30407 113.97271 291.94531 124.88867 C 274.26764 194.89224 205.67965 267.72346 151.23242 296.71484 C 132.84765 305.20012 120.11935 276.91684 136.38281 269.13867 C 183.75896 244.38993 245.27763 178.6276 260.83398 117.81641 C 263.13208 109.77307 269.62972 106.39895 276.1582 106.45898 z "
+     id="path909"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5" />
+  <path
+     d="m 589.3893,125.72512 c -15,0 -26,5 -36,17 v -13 c 0,-1 -1,-2 -2,-2 h -26 c -1,0 -2,1 -2,2 v 147 c 0,1 1,2 2,2 h 26 c 1,0 2,-1 2,-2 v -46 c 10,11 21,16 36,16 27,0 54,-21 54,-61 0,-40 -27,-60 -54,-60 z m -6,26 c 18,0 30,14 30,34 0,20 -12,35 -30,35 -18,0 -31,-15 -31,-35 0,-20 13,-34 31,-34 z"
+     id="path899"
+     inkscape:connector-curvature="0"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5" />
+  <path
+     d="M 715 130 C 680 130 652 157 652 191 C 652 225 679 251 714 251 C 749 251 776 224 776 190 C 776 156 750 130 715 130 z M 714 156 C 733 156 747 171 747 191 C 747 211 734 225 715 225 C 696 225 682 210 682 190 C 682 170 695 156 714 156 z "
+     id="path895"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5" />
+  <path
+     d="m 822,132 v -29 c 0,-1 0,-2 -1,-2 h -26 c -1,0 -2,1 -2,2 v 29 h -13 c -1,0 -2,1 -2,2 v 22 c 0,1 1,2 2,2 h 13 v 58 c 0,23 11,35 34,35 9,0 18,-2 25,-6 1,0 1,-1 1,-2 v -21 c 0,-1 0,-2 -1,-2 h -2 c -5,3 -11,4 -16,4 -8,0 -12,-4 -12,-12 v -54 h 30 c 1,0 2,-1 2,-2 v -22 c 0,-1 -1,-2 -2,-2 z"
+     id="path891"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5" />
+  <path
+     d="m 951,129 c 0,-11 4,-15 13,-15 5,0 10,0 15,2 h 1 c 0,0 1,-1 1,-2 V 93 c 0,-1 0,-2 -1,-2 -5,-2 -12,-3 -22,-3 -24,0 -36,14 -36,39 v 5 h -13 c -1,0 -2,1 -2,2 v 22 c 0,1 1,2 2,2 h 13 v 89 c 0,1 1,2 2,2 h 26 c 1,0 1,-1 1,-2 v -89 h 25 l 37,89 c -4,9 -8,11 -14,11 -5,0 -10,-1 -15,-4 h -1 l -1,1 -9,19 c 0,1 0,3 1,3 9,5 17,7 27,7 19,0 30,-9 39,-33 l 45,-116 v -2 c 0,-1 -1,-1 -2,-1 h -27 c -1,0 -1,1 -1,2 l -28,78 -30,-78 c 0,-1 -1,-2 -2,-2 h -44 z"
+     id="path889"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5" />
+  <path
+     d="m 868,132 c -1,0 -2,1 -2,2 v 113 c 0,1 1,2 2,2 h 26 c 1,0 1,-1 1,-2 V 134 c 0,-1 0,-2 -1,-2 z"
+     id="path887"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5" />
+  <path
+     d="m 862,99 c 0,10 9,19 19,19 10,0 18,-9 18,-19 0,-10 -8,-18 -18,-18 -10,0 -19,8 -19,18 z"
+     id="path885"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:246.62953186px;line-height:1.25;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.92486072"
+     x="429.00394"
+     y="246.73181"
+     id="text928"
+     transform="scale(0.89075916,1.1226379)"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5"><tspan
+       sodipodi:role="line"
+       id="tspan926"
+       x="429.00394"
+       y="246.73181"
+       style="stroke-width:0.92486072">J</tspan></text>
+  <g
+     id="g940"
+     transform="translate(-1.9084265,0.45802233)"
+     inkscape:export-xdpi="203.5"
+     inkscape:export-ydpi="203.5">
+    <path
+       d="m 1105.0918,132.45898 c -10,0 -18,8 -18,18 0,10 8,18 18,18 10,0 19,-8 19,-18 0,-10 -9,-18 -19,-18 z m 0.3809,1.84571 c 9,0 17,7 17,16 0,9 -8,16 -17,16 -9,0 -16,-7 -16,-16 0,-9 7,-16 16,-16 z m 1.7343,7.4375 v 10.37695 c 0,1.02538 -0.1095,1.75524 -0.3281,2.19141 -0.2125,0.42851 -0.5502,0.64257 -1.0117,0.64257 -0.2914,0 -0.5159,-0.0734 -0.6738,-0.21874 -0.2307,-0.22192 -0.3933,-0.51145 -0.4903,-0.8711 -0.097,-0.35964 -0.1462,-0.91009 -0.1562,-1.65234 l -3.9434,0.67578 c 0.073,1.30085 0.3103,2.39557 0.711,3.2832 0.4068,0.87999 0.98,1.54868 1.7207,2.00781 0.7407,0.45912 1.7849,0.68946 3.1328,0.68946 1.275,0 2.3192,-0.34859 3.1328,-1.04492 0.8197,-0.69634 1.3636,-1.54446 1.6308,-2.54688 0.2732,-1.00241 0.4102,-2.46411 0.4102,-4.38477 v -9.14843 z"
+       transform="translate(1.9084265,-0.45802233)"
+       id="path883"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
