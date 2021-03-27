@@ -1,5 +1,5 @@
-#include "login.h"
-#include "ui_login.h"
+#include "uilogin.h"
+#include "ui_uilogin.h"
 
 Login::Login(QWidget *parent) :
     QWidget(parent),
@@ -8,7 +8,7 @@ Login::Login(QWidget *parent) :
     ui->setupUi(this);
 
     ui->btnLogin->setEnabled((!ui->edtNome->text().isEmpty() &&
-                              !ui->edtUser->text().isEmpty() &&
+                              !ui->edtUsuario->text().isEmpty() &&
                               !ui->edtSecret->text().isEmpty() ));
 
 }

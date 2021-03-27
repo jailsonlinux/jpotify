@@ -1,22 +1,22 @@
-#include "usersdao.h"
+#include "usuariosdao.h"
 
 /**
- * @brief UsersDao::UsersDao
+ * @brief UsuariosDao::UsuariosDao
  * constroi instancia definindo qual tabela é do dominio e a iniciando.
  */
-UsersDao::UsersDao():
-    m_tablename(QStringLiteral("users"))
+UsuariosDao::UsuariosDao():
+    m_tablename(QStringLiteral("usuarios"))
 {
     createTable();
 }
 
 /**
- * @brief UsersDao::loadAll
- * @param userlists
+ * @brief UsuariosDao::loadAll
+ * @param userslist
  * @return verdadeiro, se consulta a base estiver ok.
- * retornando em userLists todos os users da base.
+ * retornando em userslist todos os usuarios da base.
  */
-bool UsersDao::loadAll(UserList *userlists)
+bool UsuariosDao::loadAll(UsuarioList *usuarioslist)
 {
     if (!openConnection()) {
         return false;
@@ -24,17 +24,17 @@ bool UsersDao::loadAll(UserList *userlists)
 
     QSqlQuery query(getConnection());
     query.prepare(getQueryStr(TypeQuery::All));
-    return read(query, userlists);
+    return read(query, usuarioslist);
 }
 
 /**
- * @brief UsersDao::loadFromId
- * @param userlists
+ * @brief UsuariosDao::loadFromId
+ * @param userslist
  * @param id
  * @return verdadeiro, se consulta a base estiver ok.
- * retornando em userLists o user da base com o id encontrado.
+ * retornando em userslist o user da base com o id encontrado.
  */
-bool UsersDao::loadFromId(UserList *userlists, const int id)
+bool UsuariosDao::loadFromId(UsuarioList *usuarioslist, const int id)
 {
     if (!openConnection()) {
         return false;
@@ -42,15 +42,15 @@ bool UsersDao::loadFromId(UserList *userlists, const int id)
 
     QSqlQuery query(getConnection());
     query.prepare(getQueryStr(TypeQuery::Id, id));
-    return read(query, userlists);
+    return read(query, usuarioslist);
 }
 
 /**
- * @brief UsersDao::add
+ * @brief UsuariosDao::add
  * @param user
  * @return verdadeiro, se usuario adicionado com sucesso.
  */
-bool UsersDao::add(User *user)
+bool UsuariosDao::add(Usuario *user)
 {
     if (!openConnection()) {
         return false;
@@ -74,11 +74,11 @@ bool UsersDao::add(User *user)
 }
 
 /**
- * @brief UsersDao::remove
+ * @brief UsuariosDao::remove
  * @param user
  * @return verdadeiro, se executado com sucesso e removido usuario.
  */
-bool UsersDao::remove(User *user)
+bool UsuariosDao::remove(Usuario *user)
 {
     if (!openConnection()) {
         return false;
@@ -97,10 +97,10 @@ bool UsersDao::remove(User *user)
 }
 
 /**
- * @brief UsersDao::createTable
+ * @brief UsuariosDao::createTable
  * inicia a tabela, caso nao exista.
  */
-void UsersDao::createTable()
+void UsuariosDao::createTable()
 {
     if (!openConnection()) {
         return;
@@ -125,13 +125,13 @@ void UsersDao::createTable()
 }
 
 /**
- * @brief UsersDao::read
+ * @brief UsuariosDao::read
  * @param query
- * @param userlists
+ * @param userslist
  * @return verdadeiro, caso a execução de consultas seja válida,
  * preenchendo usuarios com dados da base.
  */
-bool UsersDao::read(QSqlQuery &query, UserList *userlists)
+bool UsuariosDao::read(QSqlQuery &query, UsuarioList *usuarioslist)
 {
     const bool exec = query.exec();
     if (!exec) {
@@ -144,9 +144,9 @@ bool UsersDao::read(QSqlQuery &query, UserList *userlists)
         constexpr auto fieldAcessToken = 4;
         constexpr auto fieldAutoLogin = 5;
 
-        userlists->clear();
+        usuarioslist->clear();
         while (query.next()) {
-            User *user = new User;
+            Usuario *user = new Usuario;
 
             user->setId(query.value(fieldId).toInt());
             user->setNome(query.value(fieldNome).toString());
@@ -155,7 +155,7 @@ bool UsersDao::read(QSqlQuery &query, UserList *userlists)
             user->setAccess_token(query.value(fieldAcessToken).toString());
             user->setAutologin(query.value(fieldAutoLogin).toBool());
 
-            userlists->addUser(user);
+            usuarioslist->addUsuario(user);
         }
     }
 
@@ -164,11 +164,11 @@ bool UsersDao::read(QSqlQuery &query, UserList *userlists)
 }
 
 /**
- * @brief UsersDao::getQueryStr
+ * @brief UsuariosDao::getQueryStr
  * @param type
  * @return consulta SQL generica para todos os registros da base.
  */
-QString UsersDao::getQueryStr(AbstractDao::TypeQuery type)
+QString UsuariosDao::getQueryStr(AbstractDao::TypeQuery type)
 {
     QString queryStr(QStringLiteral("SELECT"));
     queryStr += QStringLiteral(" id, nome, clientid, secret, access_token, autologin");
@@ -182,12 +182,12 @@ QString UsersDao::getQueryStr(AbstractDao::TypeQuery type)
 }
 
 /**
- * @brief UsersDao::getQueryStr
+ * @brief UsuariosDao::getQueryStr
  * @param type
  * @param id
  * @return consulta SQL generica para todos os registros da base de determinado id.
  */
-QString UsersDao::getQueryStr(AbstractDao::TypeQuery type, const int id)
+QString UsuariosDao::getQueryStr(AbstractDao::TypeQuery type, const int id)
 {
     QString queryStr = getQueryStr(type);
 

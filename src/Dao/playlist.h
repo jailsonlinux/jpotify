@@ -15,7 +15,7 @@ public:
     void setId(int getId);
 
     int userid() const;
-    void setUserid(int userid);
+    void setUsuarioid(int userid);
 
     QString nome() const;
     void setNome(const QString &nome);

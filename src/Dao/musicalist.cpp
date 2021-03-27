@@ -38,7 +38,7 @@ void MusicaList::addMusica(Musica *musica)
 }
 
 /**
- * @brief MusicaList::removeUser
+ * @brief MusicaList::removeUsuario
  * @param musica
  */
 void MusicaList::removeMusica(Musica *musica)

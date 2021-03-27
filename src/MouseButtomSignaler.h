@@ -1,5 +1,8 @@
 #include <QtWidgets>
-
+/**
+ * @brief The MouseButtonSignaler class
+ * Coisa muito útil para fazer labels, por exemplo executarem clicks.
+ */
 class MouseButtonSignaler : public QObject {
   Q_OBJECT
   bool eventFilter(QObject * obj, QEvent * ev) Q_DECL_OVERRIDE {

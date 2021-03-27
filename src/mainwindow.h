@@ -3,10 +3,9 @@
 #include <QMainWindow>
 #include <memory>
 
-#include "login.h"
-#include "searchresult.h"
-#include "Dao/user.h"
-#include "MouseButtomSignaler.h"
+#include "uilogin.h"
+#include "uiresultadopesquisa.h"
+#include "Dao/usuario.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,11 +19,19 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_btnBliblioteca_clicked();
+
+    void on_btnInicio_clicked();
+
+    void on_btnBuscar_clicked();
+
+    void on_btnCriarPlaylist_clicked();
+
 private:
     Ui::MainWindow *ui;
     Login *m_uiLogin;
-    User *m_user;
-    SearchResult *m_uiSearch;
-    MouseButtonSignaler signaler;
+    Usuario *m_usuario;
+    ResultadoPesquisa *m_uiSearch;
 };
 

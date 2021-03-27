@@ -118,20 +118,20 @@ PlayList *Playlists::getPlaylistByName(const QString &playlistName)
 }
 
 /**
- * @brief Playlists::getUserid
+ * @brief Playlists::getUsuarioid
  * @return o id do usuario dono das playlist.
  */
-int Playlists::getUserid() const
+int Playlists::getUsuarioid() const
 {
     return m_userid;
 }
 
 /**
- * @brief Playlists::setUserid
+ * @brief Playlists::setUsuarioid
  * @param userid
  * define o usuario da playlist.
  */
-void Playlists::setUserid(int userid)
+void Playlists::setUsuarioid(int userid)
 {
     m_userid = userid;
 }

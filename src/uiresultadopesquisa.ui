@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SearchResult</class>
- <widget class="QWidget" name="SearchResult">
+ <class>ResultadoPesquisa</class>
+ <widget class="QWidget" name="ResultadoPesquisa">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -45,7 +45,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QTableWidget" name="tableWidget">
+      <widget class="QTableWidget" name="tabelaResultados">
        <property name="autoFillBackground">
         <bool>false</bool>
        </property>

@@ -1,5 +1,5 @@
-#include "usuarios.h"
-#include "ui_usuarios.h"
+#include "uiusuarios.h"
+#include "ui_uiusuarios.h"
 
 Usuarios::Usuarios(QWidget *parent) :
     QDialog(parent),

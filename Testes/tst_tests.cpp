@@ -5,9 +5,9 @@
 
 #include "../src/Db/abstractdao.h"
 
-#include "../src/Dao/user.h"
-#include "../src/Dao/userlist.h"
-#include "../src/Dao/usersdao.h"
+#include "../src/Dao/usuario.h"
+#include "../src/Dao/usuariolist.h"
+#include "../src/Dao/usuariosdao.h"
 
 #include "../src/Dao/playlist.h"
 #include "../src/Dao/playlists.h"
@@ -30,7 +30,7 @@ public:
     ~Tests();
 
 private:
-    void initUser();
+    void initUsuario();
     Musica * initMusica(const QString &key, const int idplaylist, const QString &descricao);
 
     PlayList *createPlayList(
@@ -42,8 +42,8 @@ private:
 
     Playlists initPlayLists();
 
-    std::unique_ptr<User> user;
-    std::unique_ptr<UserList> users;
+    std::unique_ptr<Usuario> user;
+    std::unique_ptr<UsuarioList> usuarios;
 
     const QString connId{QStringLiteral("connTest")};
 
@@ -52,8 +52,8 @@ private slots:
     //    void cleanupTestCase();
 
     //Dto
-    void testUser();
-    void testUserList();
+    void testUsuario();
+    void testUsuarioList();
     void testPlaylist();
     void testPlaylists();
     void testMusica();
@@ -61,7 +61,7 @@ private slots:
 
 
     //Dao
-    void testUsersDao();
+    void testUsuariosDao();
     void testPlayListsDao();
     void testMusicasDao();
 
@@ -74,8 +74,8 @@ private slots:
 };
 
 Tests::Tests():
-    user(std::make_unique<User>()),
-    users(std::make_unique<UserList>())
+    user(std::make_unique<Usuario>()),
+    usuarios(std::make_unique<UsuarioList>())
 {
 
 }
@@ -85,7 +85,7 @@ Tests::~Tests()
 
 }
 
-void Tests::initUser()
+void Tests::initUsuario()
 {
     user->setId(1);
     user->setNome(QStringLiteral("Jailson"));
@@ -112,7 +112,7 @@ Musica *Tests::initMusica(const QString &key, const int idplaylist, const QStrin
 
 Playlists Tests::initPlayLists()
 {
-    initUser();
+    initUsuario();
     Playlists playlists = Playlists();
     playlists.addPlaylist(createPlayList(1,
                                          QStringLiteral("Rock"),
@@ -137,14 +137,14 @@ PlayList *Tests::createPlayList(const int id, const QString &nome, const QString
     playLst->setNome(nome);
     playLst->setDescricao(descricao);
     playLst->setApiid(apiId);
-    playLst->setUserid(userId);
+    playLst->setUsuarioid(userId);
 
     return playLst;
 }
 
-void Tests::testUser()
+void Tests::testUsuario()
 {
-    initUser();
+    initUsuario();
     QCOMPARE(user.get()->id(), 1);
     QCOMPARE(user.get()->nome(), QStringLiteral("Jailson"));
     QCOMPARE(user.get()->clientid(), QStringLiteral("qwertqwertqwert"));
@@ -153,33 +153,33 @@ void Tests::testUser()
     QCOMPARE(user.get()->autologin(), true);
 }
 
-void Tests::testUserList()
+void Tests::testUsuarioList()
 {
-    users.get()->clear();
-    QCOMPARE(users.get()->size(), 0);
+    usuarios.get()->clear();
+    QCOMPARE(usuarios.get()->size(), 0);
 
-    initUser();
-    users.get()->addUser(user.get());
-    QCOMPARE(users.get()->size(), 1);
+    initUsuario();
+    usuarios.get()->addUsuario(user.get());
+    QCOMPARE(usuarios.get()->size(), 1);
 
-    users.get()->removeUser(user.get());
-    QCOMPARE(users.get()->size(), 0);
+    usuarios.get()->removeUsuario(user.get());
+    QCOMPARE(usuarios.get()->size(), 0);
 
-    initUser();
-    users.get()->addUser(user.get());
+    initUsuario();
+    usuarios.get()->addUsuario(user.get());
 
-    User *_user;
-    _user = users.get()->getUserById(1);
+    Usuario *_user;
+    _user = usuarios.get()->getUsuarioById(1);
     QCOMPARE(_user->id(), 1);
 
-    _user = users.get()->getUserByName(QStringLiteral("Jailson"));
+    _user = usuarios.get()->getUsuarioByName(QStringLiteral("Jailson"));
     QCOMPARE(_user->nome(), QStringLiteral("Jailson"));
 
-    _user = users.get()->getUserByClientId(QStringLiteral("qwertqwertqwert"));
+    _user = usuarios.get()->getUsuarioByClientId(QStringLiteral("qwertqwertqwert"));
     QCOMPARE(_user->clientid(), QStringLiteral("qwertqwertqwert"));
 
-    users.get()->clear();
-    QCOMPARE(users.get()->size(), 0);
+    usuarios.get()->clear();
+    QCOMPARE(usuarios.get()->size(), 0);
 }
 
 void Tests::testMusica()
@@ -261,7 +261,7 @@ void Tests::testMusicaList()
 
 void Tests::testPlaylist()
 {
-    initUser();
+    initUsuario();
 
     PlayList *playlist =  createPlayList(1,
                                          QStringLiteral("Rock"),
@@ -332,36 +332,36 @@ void Tests::testPlaylists()
     QCOMPARE(_playlist2->nome(), QStringLiteral("Balada"));
 }
 
-void Tests::testUsersDao()
+void Tests::testUsuariosDao()
 {
-    UsersDao usersDao = UsersDao();
+    UsuariosDao usersDao = UsuariosDao();
 
     // inicia limpando caso exista o user inicial
-    initUser();
+    initUsuario();
     usersDao.remove(user.get());
-    users.get()->clear();
+    usuarios.get()->clear();
 
-    usersDao.loadAll(users.get());
-    QCOMPARE(users.get()->size(), 0);
+    usersDao.loadAll(usuarios.get());
+    QCOMPARE(usuarios.get()->size(), 0);
 
     usersDao.add(user.get());
-    usersDao.loadAll(users.get());
-    QCOMPARE(users.get()->size(), 1);
+    usersDao.loadAll(usuarios.get());
+    QCOMPARE(usuarios.get()->size(), 1);
 
-    users.get()->clear();
-    usersDao.loadFromId(users.get(), user.get()->id());
-    QCOMPARE(users.get()->size(), 1);
+    usuarios.get()->clear();
+    usersDao.loadFromId(usuarios.get(), user.get()->id());
+    QCOMPARE(usuarios.get()->size(), 1);
 
     usersDao.remove(user.get());
-    initUser();
-    usersDao.loadAll(users.get());
-    QCOMPARE(users.get()->size(), 0);
+    initUsuario();
+    usersDao.loadAll(usuarios.get());
+    QCOMPARE(usuarios.get()->size(), 0);
 
 }
 
 void Tests::testPlayListsDao()
 {
-    initUser();
+    initUsuario();
     PlayList *playlist =  createPlayList(1,
                                          QStringLiteral("Rock"),
                                          QStringLiteral("Bandas de Rock 80"),
@@ -390,12 +390,12 @@ void Tests::testPlayListsDao()
     playlistDao.remove(playlist);
 
     playlistDao.loadAll(&playlists);
-    QCOMPARE(users.get()->size(), 0);
+    QCOMPARE(usuarios.get()->size(), 0);
 }
 
 void Tests::testMusicasDao()
 {
-    initUser();
+    initUsuario();
     PlayList *playlist =  createPlayList(1,
                                          QStringLiteral("Rock"),
                                          QStringLiteral("Bandas de Rock 80"),

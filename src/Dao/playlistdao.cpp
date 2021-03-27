@@ -122,20 +122,20 @@ bool PlaylistDao::removeAll()
 }
 
 /**
- * @brief PlaylistDao::getUserid
+ * @brief PlaylistDao::getUsuarioid
  * @return id do usuario atual das playlists.
  */
-int PlaylistDao::getUserid() const
+int PlaylistDao::getUsuarioid() const
 {
     return m_userid;
 }
 
 /**
- * @brief PlaylistDao::setUserid
+ * @brief PlaylistDao::setUsuarioid
  * @param userid
  * define o usuario atual na manipulacao da playlist.
  */
-void PlaylistDao::setUserid(int userid)
+void PlaylistDao::setUsuarioid(int userid)
 {
     m_userid = userid;
 }
@@ -181,7 +181,7 @@ bool PlaylistDao::readData(QSqlQuery &query, Playlists *playlists)
         qCritical() << "Erro tentando ler dados da tabela " << m_tablename << ". " << query.lastError().text();
     } else {
         constexpr auto fieldId = 0;
-        constexpr auto fieldUserid = 1;
+        constexpr auto fieldUsuarioid = 1;
         constexpr auto fieldNome = 2;
         constexpr auto fieldDescricao = 3;
         constexpr auto fieldApiId = 4;
@@ -191,7 +191,7 @@ bool PlaylistDao::readData(QSqlQuery &query, Playlists *playlists)
             PlayList *playlist = new PlayList;
 
             playlist->setId(query.value(fieldId).toInt());
-            playlist->setUserid(query.value(fieldUserid).toInt());
+            playlist->setUsuarioid(query.value(fieldUsuarioid).toInt());
             playlist->setNome(query.value(fieldNome).toString());
             playlist->setDescricao(query.value(fieldDescricao).toString());
             playlist->setApiid(query.value(fieldApiId).toString());

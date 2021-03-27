@@ -17,8 +17,8 @@ public:
     void clear();
     int getSize() const;
 
-    int getUserid() const;
-    void setUserid(int userid);
+    int getUsuarioid() const;
+    void setUsuarioid(int userid);
 
     void addPlaylist(PlayList *playlist);
     void removePlaylistByName(const QString &playlistName);

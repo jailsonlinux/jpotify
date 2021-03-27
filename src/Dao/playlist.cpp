@@ -43,11 +43,11 @@ int PlayList::userid() const
 }
 
 /**
- * @brief PlayList::setUserid
+ * @brief PlayList::setUsuarioid
  * @param userid
  * definine identificador unico de usuário da playlist.
  */
-void PlayList::setUserid(int userid)
+void PlayList::setUsuarioid(int userid)
 {
     m_userid = userid;
 }

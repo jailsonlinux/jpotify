@@ -25,8 +25,8 @@ public:
     bool remove(PlayList *playlist);
     bool removeAll();
 
-    int getUserid() const;
-    void setUserid(int userid);
+    int getUsuarioid() const;
+    void setUsuarioid(int userid);
 
 private:
     int m_userid;

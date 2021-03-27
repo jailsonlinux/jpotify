@@ -2,11 +2,11 @@
 
 #include <QObject>
 
-class User
+class Usuario
 {
 public:
-    explicit User();
-    ~User() = default;
+    explicit Usuario();
+    ~Usuario() = default;
 
     int id() const;
     void setId(int id);

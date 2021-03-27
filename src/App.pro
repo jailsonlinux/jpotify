@@ -16,25 +16,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    login.cpp \
     main.cpp \
     mainwindow.cpp \
-    searchresult.cpp \
-    usuarios.cpp
+    uilogin.cpp \
+    uiresultadopesquisa.cpp \
+    uiusuarios.cpp
 
 HEADERS += \
     MouseButtomSignaler.h \
-    login.h \
     mainwindow.h \
-    searchresult.h \
-    usuarios.h
+    uilogin.h \
+    uiresultadopesquisa.h \
+    uiusuarios.h
 
 
 HEADERS += $$PWD/../src/Db/abstractdao.h \
            $$PWD/../src/Db/dbconn.h \
-           $$PWD/../src/Dao/user.h \
-           $$PWD/../src/Dao/userlist.h \
-           $$PWD/../src/Dao/usersdao.h \
+           $$PWD/../src/Dao/usuario.h \
+           $$PWD/../src/Dao/usuariolist.h \
+           $$PWD/../src/Dao/usuariosdao.h \
            $$PWD/../src/Dao/playlist.h \
            $$PWD/../src/Dao/playlists.h \
            $$PWD/../src/Dao/playlistdao.h \
@@ -45,9 +45,9 @@ HEADERS += $$PWD/../src/Db/abstractdao.h \
 
 SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
             $$PWD/../src/Db/dbconn.cpp \
-            $$PWD/../src/Dao/user.cpp \
-            $$PWD/../src/Dao/userlist.cpp \
-            $$PWD/../src/Dao/usersdao.cpp \
+            $$PWD/../src/Dao/usuario.cpp \
+            $$PWD/../src/Dao/usuariolist.cpp \
+            $$PWD/../src/Dao/usuariosdao.cpp \
             $$PWD/../src/Dao/playlist.cpp \
             $$PWD/../src/Dao/playlists.cpp \
             $$PWD/../src/Dao/playlistdao.cpp \
@@ -59,10 +59,10 @@ SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
 INCLUDEPATH += $$DIR_INCLUDE
 
 FORMS += \
-    login.ui \
     mainwindow.ui \
-    searchresult.ui \
-    usuarios.ui
+    uilogin.ui \
+    uiresultadopesquisa.ui \
+    uiusuarios.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

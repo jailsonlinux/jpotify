@@ -206,7 +206,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="edtUser">
+          <widget class="QLineEdit" name="edtUsuario">
            <property name="maxLength">
             <number>100</number>
            </property>

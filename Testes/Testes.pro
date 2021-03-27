@@ -10,9 +10,9 @@ TARGET = Testes
 
 HEADERS += $$PWD/../src/Db/abstractdao.h \
            $$PWD/../src/Db/dbconn.h \
-           $$PWD/../src/Dao/user.h \
-           $$PWD/../src/Dao/userlist.h \
-           $$PWD/../src/Dao/usersdao.h \
+           $$PWD/../src/Dao/usuario.h \
+           $$PWD/../src/Dao/usuariolist.h \
+           $$PWD/../src/Dao/usuariosdao.h \
            $$PWD/../src/Dao/playlist.h \
            $$PWD/../src/Dao/playlists.h \
            $$PWD/../src/Dao/playlistdao.h \
@@ -23,9 +23,9 @@ HEADERS += $$PWD/../src/Db/abstractdao.h \
 
 SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
             $$PWD/../src/Db/dbconn.cpp \
-            $$PWD/../src/Dao/user.cpp \
-            $$PWD/../src/Dao/userlist.cpp \
-            $$PWD/../src/Dao/usersdao.cpp \
+            $$PWD/../src/Dao/usuario.cpp \
+            $$PWD/../src/Dao/usuariolist.cpp \
+            $$PWD/../src/Dao/usuariosdao.cpp \
             $$PWD/../src/Dao/playlist.cpp \
             $$PWD/../src/Dao/playlists.cpp \
             $$PWD/../src/Dao/playlistdao.cpp \
