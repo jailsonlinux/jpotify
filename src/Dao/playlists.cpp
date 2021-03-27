@@ -100,6 +100,7 @@ PlayList *Playlists::getPlaylistById(const int id)
     if(itr != m_playlists.end()) {
         return (*itr);
     }
+
     return nullptr;
 }
 

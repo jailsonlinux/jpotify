@@ -11,14 +11,17 @@ public:
     ~UsuarioList();
     void clear();
     int size() const;
-    void addUsuario(Usuario *Usuario);
-    void removeUsuario(Usuario *Usuario);
+    void addUsuario(Usuario *usuario);
+    void removeUsuario(Usuario *usuario);
     Usuario *getUsuarioByName(const QString &nome);
     Usuario *getUsuarioById(const int id);
     Usuario *getUsuarioByClientId(const QString &clientid);
 
+    QList<Usuario *> getUsuarios() const;
+    void setUsuarios(const QList<Usuario *> &usuarios);
+
 private:
-    QList<Usuario*> m_usuario;
+    QList<Usuario*> m_usuarios;
 
 };
 

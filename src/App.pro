@@ -16,15 +16,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Api/api.cpp \
+    Controllers/usuarioscontroller.cpp \
     main.cpp \
     mainwindow.cpp \
+    uibiblioteca.cpp \
     uilogin.cpp \
     uiresultadopesquisa.cpp \
     uiusuarios.cpp
 
 HEADERS += \
+    Api/api.h \
+    Controllers/usuarioscontroller.h \
     MouseButtomSignaler.h \
     mainwindow.h \
+    uibiblioteca.h \
     uilogin.h \
     uiresultadopesquisa.h \
     uiusuarios.h
@@ -60,6 +66,7 @@ INCLUDEPATH += $$DIR_INCLUDE
 
 FORMS += \
     mainwindow.ui \
+    uibiblioteca.ui \
     uilogin.ui \
     uiresultadopesquisa.ui \
     uiusuarios.ui

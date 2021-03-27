@@ -29,6 +29,9 @@ private slots:
     void on_btnCriarPlaylist_clicked();
 
 private:
+
+    void swapLoginToSearch();
+
     Ui::MainWindow *ui;
     Login *m_uiLogin;
     Usuario *m_usuario;

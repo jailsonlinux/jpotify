@@ -63,7 +63,11 @@ Musica *MusicaList::getMusicaByName(const QString &nome)
         return musica->nome() == nome;
     });
 
-    return u.i->t();
+    if(u != m_musicas.end()) {
+        return u.i->t();
+    }
+
+    return nullptr;
 }
 
 Musica *MusicaList::getMusicaByKey(const QString key)
@@ -73,7 +77,11 @@ Musica *MusicaList::getMusicaByKey(const QString key)
         return musica->key() == key;
     });
 
-    return u.i->t();
+    if(u != m_musicas.end()) {
+        return u.i->t();
+    }
+
+    return nullptr;
 }
 
 QList<Musica *> MusicaList::getMusicas() const

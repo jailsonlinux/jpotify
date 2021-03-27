@@ -18,7 +18,7 @@ UsuarioList::~UsuarioList()
  */
 void UsuarioList::clear()
 {
-    m_usuario.clear();
+    m_usuarios.clear();
 }
 
 /**
@@ -27,7 +27,7 @@ void UsuarioList::clear()
  */
 int UsuarioList::size() const
 {
-    return m_usuario.size();
+    return m_usuarios.size();
 }
 
 /**
@@ -35,9 +35,9 @@ int UsuarioList::size() const
  * @param Usuario
  * adiciona um usuario a lista.
  */
-void UsuarioList::addUsuario(Usuario *Usuario)
+void UsuarioList::addUsuario(Usuario *usuario)
 {
-    m_usuario.append(Usuario);
+    m_usuarios.append(usuario);
 }
 
 /**
@@ -45,9 +45,9 @@ void UsuarioList::addUsuario(Usuario *Usuario)
  * @param Usuario
  * remove um usuario da lista.
  */
-void UsuarioList::removeUsuario(Usuario *Usuario)
+void UsuarioList::removeUsuario(Usuario *usuario)
 {
-    m_usuario.removeOne(Usuario);
+    m_usuarios.removeOne(usuario);
 }
 
 /**
@@ -57,12 +57,16 @@ void UsuarioList::removeUsuario(Usuario *Usuario)
  */
 Usuario *UsuarioList::getUsuarioByName(const QString &nome)
 {
-    auto u = std::find_if(std::begin(m_usuario), std::end(m_usuario),
-                  [&](Usuario *Usuario){
-        return Usuario->nome() == nome;
+    auto u = std::find_if(std::begin(m_usuarios), std::end(m_usuarios),
+                  [&](Usuario *usuario){
+        return usuario->nome() == nome;
     });
 
-    return u.i->t();
+    if(u != m_usuarios.end()) {
+        return u.i->t();
+    }
+
+    return nullptr;
 }
 
 /**
@@ -72,12 +76,16 @@ Usuario *UsuarioList::getUsuarioByName(const QString &nome)
  */
 Usuario *UsuarioList::getUsuarioById(const int id)
 {
-    auto u = std::find_if(std::begin(m_usuario), std::end(m_usuario),
-                  [&](Usuario *Usuario){
-        return Usuario->id() == id;
+    auto u = std::find_if(std::begin(m_usuarios), std::end(m_usuarios),
+                  [&](Usuario *usuario){
+        return usuario->id() == id;
     });
 
-    return u.i->t();
+    if(u != m_usuarios.end()) {
+        return u.i->t();
+    }
+
+    return nullptr;
 }
 
 /**
@@ -87,10 +95,25 @@ Usuario *UsuarioList::getUsuarioById(const int id)
  */
 Usuario *UsuarioList::getUsuarioByClientId(const QString &clientid)
 {
-    auto u = std::find_if(std::begin(m_usuario), std::end(m_usuario),
-                  [&](Usuario *Usuario){
-        return Usuario->clientid() == clientid;
+    auto u = std::find_if(std::begin(m_usuarios), std::end(m_usuarios),
+                  [&](Usuario *usuario){
+        return usuario->clientid() == clientid;
     });
 
-    return u.i->t();
+    if(u != m_usuarios.end()) {
+        return u.i->t();
+    }
+
+    return nullptr;
+}
+
+QList<Usuario *> UsuarioList::getUsuarios() const
+{
+    return m_usuarios;
+}
+
+void UsuarioList::setUsuarios(const QList<Usuario *> &usuarios)
+{
+    m_usuarios.clear();
+    m_usuarios.append(usuarios);
 }

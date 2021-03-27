@@ -57,8 +57,8 @@ bool UsuariosDao::add(Usuario *user)
     }
 
     QSqlQuery query(getConnection());
-    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 (id, nome, clientid, secret, access_token, autologin) VALUES(:id, :nome, :clientid, :secret, :access_token, :autologin)").arg(m_tablename));
-    query.bindValue(QStringLiteral(":id"), user->id());
+    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 ( nome, clientid, secret, access_token, autologin) VALUES(:nome, :clientid, :secret, :access_token, :autologin)").arg(m_tablename));
+//    query.bindValue(QStringLiteral(":id"), user->id()); //autoincrement
     query.bindValue(QStringLiteral(":nome"), user->nome());
     query.bindValue(QStringLiteral(":clientid"), user->clientid());
     query.bindValue(QStringLiteral(":secret"), user->secret());

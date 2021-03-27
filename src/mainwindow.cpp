@@ -22,15 +22,24 @@ MainWindow::MainWindow(QWidget *parent)
     //iniciar tela de login, e buscas
     ui->stackedWidget->addWidget(m_uiLogin);
     ui->stackedWidget->addWidget(m_uiSearch);
+    m_uiSearch->hide();
+
     //Chamar login
     ui->stackedWidget->setCurrentWidget(m_uiLogin);
+    m_uiLogin->show();
+
     //Cancelar exibe busca
     connect(m_uiLogin, &Login::on_loginCancel, [&]() {
-        ui->stackedWidget->setCurrentWidget(m_uiSearch);
-        m_uiSearch->show();
-        ui->stackedWidget->removeWidget(m_uiLogin);
+        swapLoginToSearch();
     });
 
+    //Cancelar exibe busca
+    connect(m_uiLogin, &Login::on_loginsucess, [&]() {
+        m_usuario = m_uiLogin->getUsuario();
+
+        ui->lblLoggedUser->setText(m_usuario->nome());
+        swapLoginToSearch();
+    });
 }
 
 MainWindow::~MainWindow()
@@ -50,8 +59,10 @@ void MainWindow::on_btnBliblioteca_clicked()
  */
 void MainWindow::on_btnInicio_clicked()
 {
-    ui->stackedWidget->addWidget(m_uiLogin);
     ui->stackedWidget->setCurrentWidget(m_uiLogin);
+    m_uiLogin->show();
+    m_uiLogin->reloadComboUsuarios();
+    m_uiSearch->hide();
 }
 
 /**
@@ -70,4 +81,11 @@ void MainWindow::on_btnBuscar_clicked()
 void MainWindow::on_btnCriarPlaylist_clicked()
 {
 
+}
+
+void MainWindow::swapLoginToSearch()
+{
+    ui->stackedWidget->setCurrentWidget(m_uiSearch);
+    m_uiLogin->hide();
+    m_uiSearch->show();
 }
