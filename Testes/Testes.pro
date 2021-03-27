@@ -18,7 +18,10 @@ HEADERS += $$PWD/../src/Db/abstractdao.h \
            $$PWD/../src/Dao/playlistdao.h \
            $$PWD/../src/Dao/musica.h \
            $$PWD/../src/Dao/musicalist.h \
-           $$PWD/../src/Dao/musicasdao.h
+           $$PWD/../src/Dao/musicasdao.h \
+           $$PWD/../src/Api/api.h \
+           $$PWD/../src/Controllers/usuarioscontroller.h
+
 
 
 SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
@@ -32,6 +35,8 @@ SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
             $$PWD/../src/Dao/musica.cpp \
             $$PWD/../src/Dao/musicalist.cpp \
             $$PWD/../src/Dao/musicasdao.cpp \
+            $$PWD/../src/Api/api.cpp \
+            $$PWD/../src/Controllers/usuarioscontroller.cpp \
             tst_tests.cpp
 
 INCLUDEPATH += $$DIR_INCLUDE

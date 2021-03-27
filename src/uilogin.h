@@ -49,6 +49,5 @@ private:
     Usuario *usuario;
     UsuariosController *usuariosController;
     Api *api;
-
 };
 

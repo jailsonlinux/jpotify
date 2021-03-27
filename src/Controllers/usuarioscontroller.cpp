@@ -1,5 +1,6 @@
 #include "usuarioscontroller.h"
 
+
 UsuariosController::UsuariosController():
   m_usuarioAtual(new Usuario)
   ,m_usuarios(new UsuarioList)

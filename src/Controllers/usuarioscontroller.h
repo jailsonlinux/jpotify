@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QObject>
-#include "Dao/usuario.h"
-#include "Dao/usuariolist.h"
-#include "Dao/usuariosdao.h"
+#include "../Dao/usuario.h"
+#include "../Dao/usuariolist.h"
+#include "../Dao/usuariosdao.h"
 
 class UsuariosController: public QObject
 {

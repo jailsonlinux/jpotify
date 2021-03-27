@@ -21,11 +21,12 @@ DEFINES += ROOT_PATH=\\\"$$DIR_INSTALL\\\"
 
 #DIR_LIB=$$DIR_INSTALL
 
-#DIR_INCLUDE += $$PWD/src \
-#              $$PWD/src/Api \
-#              $$PWD/src/Dao \
-#              $$PWD/src/Db \
-#              $$PWD/Testes
+DIR_INCLUDE += $$PWD/src \
+              $$PWD/src/Api \
+              $$PWD/src/Dao \
+              $$PWD/src/Db \
+              $$PWD/src/Controller \
+              $$PWD/Testes
 
 #CONFIG(debug, debug|release) {
 #    DEFINES += APPMODE=\\\"debug\\\"

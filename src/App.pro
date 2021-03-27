@@ -16,8 +16,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Api/api.cpp \
-    Controllers/usuarioscontroller.cpp \
     main.cpp \
     mainwindow.cpp \
     uibiblioteca.cpp \
@@ -26,8 +24,6 @@ SOURCES += \
     uiusuarios.cpp
 
 HEADERS += \
-    Api/api.h \
-    Controllers/usuarioscontroller.h \
     MouseButtomSignaler.h \
     mainwindow.h \
     uibiblioteca.h \
@@ -46,7 +42,9 @@ HEADERS += $$PWD/../src/Db/abstractdao.h \
            $$PWD/../src/Dao/playlistdao.h \
            $$PWD/../src/Dao/musica.h \
            $$PWD/../src/Dao/musicalist.h \
-           $$PWD/../src/Dao/musicasdao.h
+           $$PWD/../src/Dao/musicasdao.h \
+           $$PWD/../src/Api/api.h \
+           $$PWD/../src/Controllers/usuarioscontroller.h
 
 
 SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
@@ -59,7 +57,10 @@ SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
             $$PWD/../src/Dao/playlistdao.cpp \
             $$PWD/../src/Dao/musica.cpp \
             $$PWD/../src/Dao/musicalist.cpp \
-            $$PWD/../src/Dao/musicasdao.cpp
+            $$PWD/../src/Dao/musicasdao.cpp \
+            $$PWD/../src/Api/api.cpp \
+            $$PWD/../src/Controllers/usuarioscontroller.cpp
+
 
 
 INCLUDEPATH += $$DIR_INCLUDE
