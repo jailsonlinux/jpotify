@@ -4,8 +4,6 @@
 
 #include "Api/api.h"
 #include "Dao/usuario.h"
-#include "Dao/usuariolist.h"
-#include "Dao/usuariosdao.h"
 #include "Controllers/usuarioscontroller.h"
 
 namespace Ui {
@@ -46,7 +44,6 @@ private slots:
     void on_btnRemove_clicked();
 
 private:
-
 
     Ui::Login *ui;
     Usuario *usuario;
