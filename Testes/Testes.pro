@@ -35,5 +35,4 @@ SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
             tst_tests.cpp
 
 INCLUDEPATH += $$DIR_INCLUDE
-
 #DESTDIR      = $${DIR_BUILD}/lib

@@ -4,6 +4,9 @@
 #include <memory>
 
 #include "login.h"
+#include "searchresult.h"
+#include "Dao/user.h"
+#include "MouseButtomSignaler.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +22,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    std::unique_ptr<Login> uiLogin;
+    Login *m_uiLogin;
+    User *m_user;
+    SearchResult *m_uiSearch;
+    MouseButtonSignaler signaler;
 };
 
