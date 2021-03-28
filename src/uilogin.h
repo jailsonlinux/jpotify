@@ -46,7 +46,7 @@ private slots:
 private:
 
     Ui::Login *ui;
-    Usuario *usuario;
+    Usuario *m_usuario;
     UsuariosController *usuariosController;
     Api *api;
 };

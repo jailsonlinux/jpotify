@@ -26,7 +26,9 @@ DIR_INCLUDE += $$PWD/src \
               $$PWD/src/Dao \
               $$PWD/src/Db \
               $$PWD/src/Controller \
-              $$PWD/Testes
+              $$PWD/Testes \
+              /home/jailson2/Qt/5.15.2/Src/qtbase/include/QtGui/QDesktopServices
+
 
 #CONFIG(debug, debug|release) {
 #    DEFINES += APPMODE=\\\"debug\\\"
@@ -41,7 +43,7 @@ DEFINES += APP_DIR=\\\"$${target.path}\\\"
 
 
 #LIBS            += -L$${DIR_BUILD}
-#INCLUDEPATH += $$DIR_INCLUDE
+INCLUDEPATH += $$DIR_INCLUDE
 DESTDIR      = $${DIR_BUILD}
 
 #!isEmpty(target.path): INSTALLS += target

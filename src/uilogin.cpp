@@ -5,9 +5,9 @@
 Login::Login(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Login),
-    usuario(new Usuario),
+    m_usuario(new Usuario),
     usuariosController(new UsuariosController()),
-    api(new Api())
+    api(new Api(this))
 {
     ui->setupUi(this);
 
@@ -26,19 +26,19 @@ Login::Login(QWidget *parent) :
     //Sucesso de login, cadastrar caso opcao marcada, ou nao existir e for sucesso.
 
     connect(api, &Api::on_acessToken, [&](){
-        usuario = usuariosController->getUsuarios()->getUsuarioByName(ui->edtNome->text().trimmed());
+        m_usuario = usuariosController->getUsuarios()->getUsuarioByName(ui->edtNome->text().trimmed());
 
-        if(usuario == nullptr) {
-            usuario = new Usuario;
-            usuario->setId(0);
-            usuario->setNome(ui->edtNome->text().trimmed());
-            usuario->setClientid(ui->edtUsuario->text().trimmed());
-            usuario->setSecret(ui->edtSecret->text().trimmed());
-            usuario->setAutologin((int)(ui->chkRegistrar->isChecked()));
+        if(m_usuario == nullptr) {
+            m_usuario = new Usuario;
+            m_usuario->setId(0);
+            m_usuario->setNome(ui->edtNome->text().trimmed());
+            m_usuario->setClientid(ui->edtUsuario->text().trimmed());
+            m_usuario->setSecret(ui->edtSecret->text().trimmed());
+            m_usuario->setAutologin((int)(ui->chkRegistrar->isChecked()));
         }
 
         if(ui->chkRegistrar->isChecked()){
-            usuariosController->addicionaUsuario(usuario);
+            usuariosController->addicionaUsuario(m_usuario);
         }
 
         emit on_loginsucess();
@@ -64,27 +64,30 @@ void Login::habilitaBotaoLogin()
 
 void Login::preencheUsuario(const QString &nome)
 {
-    usuario = usuariosController->getUsuarios()->getUsuarioByName(nome);
+    m_usuario = usuariosController->getUsuarios()->getUsuarioByName(nome);
 //    reloadComboUsuarios();
 
-    if(usuario == nullptr) {
-        usuario = new Usuario();
+    if(m_usuario == nullptr) {
+        m_usuario = new Usuario();
         usuariosController->loadAll();
     }
-    ui->edtNome->setText(usuario->nome());
-    ui->edtUsuario->setText(usuario->clientid());
-    ui->edtSecret->setText(usuario->secret());
+    ui->edtNome->setText(m_usuario->nome());
+    ui->edtUsuario->setText(m_usuario->clientid());
+    ui->edtSecret->setText(m_usuario->secret());
     ui->chkRegistrar->setChecked(true);
 }
 
 void Login::onLoginSucess()
 {
+
     emit on_loginsucess();
+
 }
 
 void Login::on_btnLogin_clicked()
 {
-    api->acessToken();
+    api->setUsuario(m_usuario);
+    api->iniciarAutenticador();
 }
 
 void Login::on_btnCancelar_clicked()
@@ -120,10 +123,10 @@ void Login::on_cmbUsuarios_currentIndexChanged(int index)
 
 void Login::on_btnRemove_clicked()
 {
-    usuario = usuariosController->getUsuarios()->getUsuarioByName(ui->edtNome->text().trimmed());
-    if(usuario != nullptr) {
-        usuariosController->removerUsuario(usuario);
-        ui->cmbUsuarios->removeItem(ui->cmbUsuarios->findText(usuario->nome()));
+    m_usuario = usuariosController->getUsuarios()->getUsuarioByName(ui->edtNome->text().trimmed());
+    if(m_usuario != nullptr) {
+        usuariosController->removerUsuario(m_usuario);
+        ui->cmbUsuarios->removeItem(ui->cmbUsuarios->findText(m_usuario->nome()));
         usuariosController->loadAll();
     }
 
@@ -140,15 +143,15 @@ void Login::reloadComboUsuarios()
         ui->cmbUsuarios->addItem(item->nome());
     });
 
-    ui->cmbUsuarios->setCurrentIndex(ui->cmbUsuarios->findText(usuario->nome().trimmed()));
+    ui->cmbUsuarios->setCurrentIndex(ui->cmbUsuarios->findText(m_usuario->nome().trimmed()));
 }
 
 Usuario *Login::getUsuario() const
 {
-    return usuario;
+    return m_usuario;
 }
 
 void Login::setUsuario(Usuario *value)
 {
-    usuario = value;
+    m_usuario = value;
 }

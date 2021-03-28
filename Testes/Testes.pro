@@ -1,5 +1,5 @@
 include($$PWD/../globals.pri)
-QT += testlib sql
+QT += testlib sql network
 QT -= gui
 
 CONFIG += qt console warn_on depend_includepath testcase
