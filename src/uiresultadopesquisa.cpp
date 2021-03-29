@@ -29,11 +29,18 @@ void ResultadoPesquisa::addplaylistMenuRequested(QPoint pos){
     QList<QAction *> actionsPlaylist;
 
     std::for_each(std::begin(m_playlists.getPlaylists()), std::end(m_playlists.getPlaylists()), [&](PlayList *playlist){
-        actionsPlaylist.append( new QAction(playlist->nome()));
+        QAction *playlistAction = new QAction(playlist->nome());
+        actionsPlaylist.append(playlistAction);
     });
     mnuPlaylists->addActions(actionsPlaylist);
-
+    connect(mnuPlaylists, SIGNAL(triggered(QAction*)) , SLOT(on_clickAddNaPlaylist(QAction*)));
     menu->popup(ui->tabelaResultados->viewport()->mapToGlobal(pos));
+}
+
+void ResultadoPesquisa::on_clickAddNaPlaylist(QAction* action)
+{
+    qDebug() << "clicado em " << action->text();
+    emit on_addMusicaNaPlaylist(action->text());
 }
 
 void ResultadoPesquisa::resizeEvent(QResizeEvent *event)

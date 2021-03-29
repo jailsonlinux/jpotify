@@ -22,17 +22,24 @@ public:
     void setTermo(const QString &termo);
 
     void setPlaylists(Playlists playlists);
+signals:
+    void on_addMusicaNaPlaylist(const QString &nome);
 
-private:
+protected:
+    void resizeEvent(QResizeEvent *event)override;
+
+private:    
     void preencheGrid();
     void addplaylistMenuRequested(QPoint pos);
 
     Ui::ResultadoPesquisa *ui;
-    void resizeEvent(QResizeEvent *event)override;
 
     Musica *m_musica;
     MusicaList *m_musicaList;
     Playlists m_playlists;
+
+private slots:
+    void on_clickAddNaPlaylist(QAction *action);
 
 };
 
