@@ -64,18 +64,26 @@ bool PlaylistDao::add(PlayList *playlist)
     if (!openConnection()) {
         return false;
     }
-    QString fieldid = QStringLiteral("");
-    QString bindid = QStringLiteral("");
 
-    if(playlist->getId() > 0){
-        QString fieldid = QStringLiteral("id, ");
-        QString bindid = QStringLiteral(":id, ");
+    if(playlist->userid() <= 0){
+        qWarning() << QStringLiteral(" User id nao definido.");
+        return false;
     }
 
     QSqlQuery query(getConnection());
-    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 (%2 userid, nome, descricao, apiid) "
-                                 "VALUES(%3  :userid, :nome, :descricao, :apiid)").arg(m_tablename).arg(fieldid).arg(bindid));
-    query.bindValue(QStringLiteral(":id"), playlist->getId());
+
+    if(playlist->getId() > 0){
+        query.prepare(QStringLiteral("UPDATE %1 SET (userid = :userid, nome = :nome, descricao = :descricao, apiid = :apiid) "
+                                     "WHERE id = :id").arg(m_tablename));
+
+    } else {
+        query.prepare(QStringLiteral("INSERT INTO %1 (userid, nome, descricao, apiid) "
+                                     "VALUES(:userid, :nome, :descricao, :apiid)").arg(m_tablename));
+
+    }
+    if(playlist->getId() > 0){
+        query.bindValue(QStringLiteral(":id"), playlist->getId());
+    }
     query.bindValue(QStringLiteral(":userid"), playlist->userid());
     query.bindValue(QStringLiteral(":nome"), playlist->nome());
     query.bindValue(QStringLiteral(":descricao"), playlist->descricao());
@@ -166,10 +174,11 @@ void PlaylistDao::createTable()
 
     const QString createTableStr(QStringLiteral("CREATE TABLE IF NOT EXISTS %1 ("
                                                 "id	INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                                "userid	INTEGER NOT NULL,"
-                                                "nome	TEXT NOT NULL,"
-                                                "descricao	TEXT,"
-                                                "apiid	TEXT"
+                                                "userid	INTEGER NOT NULL, "
+                                                "nome	TEXT NOT NULL UNIQUE, "
+                                                "descricao	TEXT, "
+                                                "apiid	TEXT, "
+                                                "FOREIGN KEY('userid') REFERENCES 'usuarios'('id') "
                                                 ");").arg(m_tablename));
 
     QSqlQuery query(getConnection());
@@ -246,7 +255,7 @@ QString PlaylistDao::getQueryStr(AbstractDao::TypeQuery type, const int id)
 {
     QString queryStr = getQueryStr(TypeQuery::All);
     if(type == TypeQuery::Id){
-      queryStr += QStringLiteral(" AND id = %1 ").arg(id);
+        queryStr += QStringLiteral(" AND id = %1 ").arg(id);
     }
 
     return queryStr;

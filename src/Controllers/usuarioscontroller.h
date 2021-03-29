@@ -20,6 +20,7 @@ public:
     void setUsuarios(UsuarioList *value);
 
     void loadAll();
+
     void clearAll();
     void addicionaUsuario(Usuario *usuario);
     void removerUsuario(Usuario *usuario);

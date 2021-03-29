@@ -3,11 +3,12 @@
 
 /**
  * @brief AbstractDao::AbstractDao
- * sqlite tip: Cada conexcao tem um identificador unico internamente.
+ * sqlite tip: Cada conexcao tem um identificador unico(QUuid::createUuid()) internamente,
+ * caso tenha concorrencia de acessos. Desabilitado para ver como se comporta o QDatabase...
  * gerenciado pelo QDatabase do Qt.
  */
 AbstractDao::AbstractDao():
-    m_connId(QUuid::createUuid().toString()),
+    m_connId(/**QUuid::createUuid().toString()**/ QStringLiteral("connUnica")),
     m_dbConn(create(m_connId))
 {}
 

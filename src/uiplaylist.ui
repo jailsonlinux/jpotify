@@ -34,7 +34,7 @@
        <property name="currentIndex">
         <number>0</number>
        </property>
-       <widget class="QWidget" name="page">
+       <widget class="QWidget" name="pageView">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QLabel" name="label_2">
@@ -104,7 +104,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page_2">
+       <widget class="QWidget" name="pageEdit">
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">

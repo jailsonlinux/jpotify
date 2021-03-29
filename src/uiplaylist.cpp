@@ -50,11 +50,16 @@ void UiPlaylist::setPlaylist(PlayList *value)
 {
     m_playlist = value;
     //Edicao/Adicao de Playlist
+    m_duracao = *new QTime;
     if(m_playlist == nullptr || m_playlist->nome().isEmpty() || m_playlist->userid() <= 0){
+
         ui->stackedWidget->setCurrentIndex(1);
     }//Visualizacao
     else
     {
+        std::for_each(std::begin(m_playlist->getMusicas()->getMusicas()), std::end(m_playlist->getMusicas()->getMusicas()), [&](Musica *musica){
+           m_duracao = m_duracao.addSecs(musica->duracao());
+        });
         ui->stackedWidget->setCurrentIndex(0);
         ui->lblPlaylistNome->setText(m_playlist->nome());
         const QString detalhes = QStringLiteral("<b>%1 <b> - %2 músicas, %3")
@@ -89,4 +94,11 @@ void UiPlaylist::setUsuario(Usuario *usuario)
 void UiPlaylist::on_btnExcluir_clicked()
 {
     emit on_excluirPlayList(m_playlist);
+}
+
+void UiPlaylist::on_btnEditar_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+    ui->edtNome->setText(m_playlist->nome());
+    ui->edtDescricao->setText(m_playlist->descricao());
 }

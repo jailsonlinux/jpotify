@@ -62,7 +62,13 @@ bool MusicasDao::add(Musica *musica)
         return false;
     }
 
+    if(musica->playlistid() <= 0 || musica->key().isEmpty()){
+        qCritical() << "Sem playlist ou key associada";
+        return false;
+    }
+
     QSqlQuery query(getConnection());
+
     query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 (key, playlistid, nome, artista, album, duracao, ordem, track, previewUrl, imagem) "
                                  "VALUES(:key, :playlistid, :nome, :artista, :album, :duracao, :ordem, :track, :previewUrl, :imagem)").arg(m_tablename));
     query.bindValue(QStringLiteral(":key"), musica->key());

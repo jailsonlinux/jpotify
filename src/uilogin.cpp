@@ -71,7 +71,7 @@ void Login::on_btnLogin_clicked()
         usuariosController->addicionaUsuario(m_usuario);
     }
 
-    emit on_escolheuUsuario();
+    emit on_escolheuUsuario(m_usuario);
 }
 
 void Login::on_btnCancelar_clicked()

@@ -42,6 +42,8 @@ private slots:
 
     void on_btnExcluir_clicked();
 
+    void on_btnEditar_clicked();
+
 private:
     Ui::UiPlaylist *ui;
 

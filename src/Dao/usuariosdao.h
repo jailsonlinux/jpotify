@@ -21,13 +21,13 @@ public:
      ~UsuariosDao() = default;
     bool loadAll(UsuarioList *usuarioslist);
     bool loadFromId(UsuarioList *usuarioslist, const int id);
-    bool add(Usuario *user);
+    bool loadFromNome(UsuarioList *usuarioslist, const QString &nome);
+    bool add(Usuario *user);    
     bool remove(Usuario *user);
 
 private:
     void createTable() override;
     bool read(QSqlQuery &query, UsuarioList *usuarioslist);
-    QString getQueryStr(TypeQuery type);
-    QString getQueryStr(TypeQuery type, const int id);
+    QString getQueryStr(TypeQuery type);    
 };
 

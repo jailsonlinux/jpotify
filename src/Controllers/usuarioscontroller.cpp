@@ -84,7 +84,11 @@ void UsuariosController::clearAll()
 void UsuariosController::addicionaUsuario(Usuario *usuario)
 {
     UsuariosDao usuariosDao;
+    const QString nome = usuario->nome();
     if(usuariosDao.add(usuario)){
+        UsuarioList *usuarioslist = nullptr;
+        usuariosDao.loadFromNome(usuarioslist, nome);
+        usuario = usuarioslist->getUsuarioByName(nome);
         m_usuarios.addUsuario(usuario);
         emit on_usuarioAdicionado();
     }

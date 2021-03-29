@@ -24,7 +24,7 @@ public:
     void preencheUsuario(Usuario *usuario);
 
 signals:
-    void on_escolheuUsuario();
+    void on_escolheuUsuario(Usuario *m_usuario);
     void on_loginErro();
     void on_loginCancel();
 

@@ -73,8 +73,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     //Confirma e tenta logar
-    connect(m_uiLogin, &Login::on_escolheuUsuario, [&]() {
-        m_usuario = m_uiLogin->getUsuario();
+    connect(m_uiLogin, &Login::on_escolheuUsuario, [&](Usuario *usuario) {
+        m_usuario = usuario;
         ui->lblLoggedUser->setText(m_usuario->nome());
 
         api->setUsuario(m_usuario);
@@ -146,7 +146,8 @@ void MainWindow::on_btnBuscar_clicked()
 void MainWindow::on_btnCriarPlaylist_clicked()
 {
 
-    PlayList * new_playlist = nullptr;
+    PlayList * new_playlist = new PlayList();
+    new_playlist->setUsuarioid(m_usuario->id());
     m_uiPlayList->setQtdMusicas(0);
     m_uiPlayList->setUsuario(m_usuario);
     m_uiPlayList->setPlaylist(new_playlist);

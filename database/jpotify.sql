@@ -8,12 +8,13 @@ CREATE TABLE IF NOT EXISTS "usuarios" (
 	"autologin"	INTEGER DEFAULT 0
 );
 
-CREATE TABLE  IF NOT EXISTS "playlists" (
+CREATE TABLE "playlist" (
 	"id"	INTEGER PRIMARY KEY AUTOINCREMENT,
 	"userid"	INTEGER NOT NULL,
-	"nome"	TEXT NOT NULL,
+	"nome"	TEXT NOT NULL UNIQUE,
 	"descricao"	TEXT,
-	"apiid"	TEXT
+	"apiid"	TEXT,
+	FOREIGN KEY("userid") REFERENCES "usuarios"("id")
 );
 
 CREATE TABLE  IF NOT EXISTS "musicas" (

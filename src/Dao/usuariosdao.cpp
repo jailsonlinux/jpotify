@@ -41,34 +41,47 @@ bool UsuariosDao::loadFromId(UsuarioList *usuarioslist, const int id)
     }
 
     QSqlQuery query(getConnection());
-    query.prepare(getQueryStr(TypeQuery::Id, id));
+    query.prepare(getQueryStr(TypeQuery::Id).arg(id));
+    return read(query, usuarioslist);
+}
+
+bool UsuariosDao::loadFromNome(UsuarioList *usuarioslist, const QString &nome)
+{
+    if (!openConnection()) {
+        return false;
+    }
+
+    QSqlQuery query(getConnection());
+    query.prepare(getQueryStr(TypeQuery::Nome).arg(nome));
     return read(query, usuarioslist);
 }
 
 /**
  * @brief UsuariosDao::add
  * @param user
- * @return verdadeiro, se usuario adicionado com sucesso.
+ * @return verdadeiro, se usuario adicionado/atualizado com sucesso.
  */
 bool UsuariosDao::add(Usuario *user)
 {
     if (!openConnection()) {
         return false;
     }
-    QString fieldid = QStringLiteral("");
-    QString bindid = QStringLiteral("");
-
-    if(user->id() > 0){
-        QString fieldid = QStringLiteral("id, ");
-        QString bindid = QStringLiteral(":id, ");
-    }
 
     QSqlQuery query(getConnection());
-    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 ( %2 nome, clientid, secret, access_token, autologin) "
-                                 "VALUES(%3 :nome, :clientid, :secret, :access_token, :autologin)").arg(m_tablename).arg(fieldid).arg(bindid));
+
+    if(user->id() > 0){
+
+        query.prepare(QStringLiteral("UPDATE %1 SET( nome = :nome, clientid = :clientid, secret = :secret, access_token = :access_token, autologin = :autologin) "
+                                     "WHERE id = :id").arg(m_tablename));
+    }else{
+        query.prepare(QStringLiteral("INSERT INTO %1 (nome, clientid, secret, access_token, autologin) "
+                                     "VALUES(:nome, :clientid, :secret, :access_token, :autologin)").arg(m_tablename));
+    }
+
     if(user->id() > 0){
         query.bindValue(QStringLiteral(":id"), user->id()); //autoincrement
     }
+
     query.bindValue(QStringLiteral(":nome"), user->nome());
     query.bindValue(QStringLiteral(":clientid"), user->clientid());
     query.bindValue(QStringLiteral(":secret"), user->secret());
@@ -186,24 +199,14 @@ QString UsuariosDao::getQueryStr(AbstractDao::TypeQuery type)
 
     if (type == TypeQuery::All) {
         qInfo() << QStringLiteral("Retornar todos registros da tabela: ") << m_tablename;
+    }else if (type == TypeQuery::Id) {
+        queryStr += QStringLiteral(" WHERE id = %1 ");
+    }else if (type == TypeQuery::Nome) {
+        queryStr += QStringLiteral(" WHERE nome = %1 ");
     }
 
     return queryStr;
 }
 
-/**
- * @brief UsuariosDao::getQueryStr
- * @param type
- * @param id
- * @return consulta SQL generica para todos os registros da base de determinado id.
- */
-QString UsuariosDao::getQueryStr(AbstractDao::TypeQuery type, const int id)
-{
-    QString queryStr = getQueryStr(type);
 
-    if (type == TypeQuery::Id) {
-        queryStr += QStringLiteral(" WHERE id = %1 ").arg(id);
-    }
 
-    return queryStr;
-}

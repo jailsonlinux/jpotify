@@ -18,7 +18,8 @@ public:
     enum class TypeQuery
     {
         All = 1,
-        Id  = 2
+        Id  = 2,
+        Nome = 3
     };
 
     bool openConnection();
