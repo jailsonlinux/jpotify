@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , m_uiLogin(new Login(this))
     , m_uiPlayList(new UiPlaylist(this))
-    , m_uiSearch(new ResultadoPesquisa(this))
+    , m_uiResultadoPesquisa(new ResultadoPesquisa(this))
     , m_usuario(new Usuario)
     , api(new Api(this))
     , playlistController(new PlayListController())
@@ -30,9 +30,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     //iniciar tela de login, e buscas
     ui->stackedWidget->addWidget(m_uiLogin);
-    ui->stackedWidget->addWidget(m_uiSearch);
+    ui->stackedWidget->addWidget(m_uiResultadoPesquisa);
     ui->stackedWidget->addWidget(m_uiPlayList);
-    m_uiSearch->hide();
+    m_uiResultadoPesquisa->hide();
     m_uiPlayList->hide();
 
     //Chamar login
@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
         reloadPlaylists();
 
         //exibir tela de buscas
-        ui->stackedWidget->setCurrentWidget(m_uiSearch);
+        ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     });
 
     //Confirma e tenta logar
@@ -83,14 +83,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Ao cancelar, volta para a tela de busca.
     connect(m_uiPlayList, &UiPlaylist::on_cancelarPlaylist, [&]() {
-          ui->stackedWidget->setCurrentWidget(m_uiSearch);
+          ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     });
 
     //Ao salvar pede ao controler para persistir. E atualizar a lista de playlists.
     connect(m_uiPlayList, &UiPlaylist::on_salvarPlayList, [&](PlayList *playlist){
           playlistController->setUsuario(m_usuario);
           playlistController->addicionarPlaylist(playlist);
-          ui->stackedWidget->setCurrentWidget(m_uiSearch);
+          ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     });
 
     //Ao salvar pede ao controler para persistir. E atualizar a lista de playlists.
@@ -98,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
           playlistController->setUsuario(m_usuario);
           playlistController->removerPlaylist(playlist);
           reloadPlaylists();
+          ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     });
 
 
@@ -127,7 +128,7 @@ void MainWindow::on_btnInicio_clicked()
     m_uiLogin->show();
 
     m_uiLogin->setUsuario(m_usuario);
-    m_uiSearch->hide();
+    m_uiResultadoPesquisa->hide();
 }
 
 /**
@@ -136,7 +137,7 @@ void MainWindow::on_btnInicio_clicked()
  */
 void MainWindow::on_btnBuscar_clicked()
 {
-    ui->stackedWidget->setCurrentWidget(m_uiSearch);
+    ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
 }
 
 /**
@@ -156,9 +157,9 @@ void MainWindow::on_btnCriarPlaylist_clicked()
 
 void MainWindow::swapLoginToSearch()
 {
-    ui->stackedWidget->setCurrentWidget(m_uiSearch);
+    ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     m_uiLogin->hide();
-    m_uiSearch->show();
+    m_uiResultadoPesquisa->show();
 }
 
 void MainWindow::reloadPlaylists()
@@ -175,14 +176,13 @@ void MainWindow::reloadPlaylists()
 void MainWindow::habilitaSeLogado()
 {
     const bool logado  = api->getAcessTokenn().size() > 0;
-    ui->btnCriarPlaylist->setEnabled(logado);
-    ui->btnExcluirPlaylist->setEnabled(logado);
-    ui->btnEditarPlaylist->setEnabled(logado);
+    ui->btnCriarPlaylist->setEnabled(logado);    
+    ui->btnPlayPlaylist->setEnabled(logado);
     ui->btnBuscar->setEnabled(logado);
     ui->lvPlaylists->setEnabled(logado || ui->lvPlaylists->count() == 0);
 }
 
-void MainWindow::on_btnEditarPlaylist_clicked()
+void MainWindow::showPlaylist()
 {
     if(ui->lvPlaylists->selectedItems().size()>0){
         currentPlaylist = playlistController->playlists().getPlaylistByName(ui->lvPlaylists->selectedItems().first()->text());
@@ -194,14 +194,24 @@ void MainWindow::on_btnEditarPlaylist_clicked()
     }
 }
 
+
 void MainWindow::on_lvPlaylists_itemSelectionChanged()
 {
-    if(ui->lvPlaylists->selectedItems().size()>0){
-        currentPlaylist = playlistController->playlists().getPlaylistByName(ui->lvPlaylists->selectedItems().first()->text());
-        if(currentPlaylist != nullptr){
-            m_uiPlayList->setUsuario(m_usuario);
-            m_uiPlayList->setPlaylist(currentPlaylist);
-            ui->stackedWidget->setCurrentWidget(m_uiPlayList);
-        }
-    }
+    showPlaylist();
+}
+
+void MainWindow::on_btnPlayPlaylist_clicked()
+{
+    //ui_tocarPlaylist
+}
+
+void MainWindow::on_lvPlaylists_clicked(const QModelIndex &index)
+{
+    if(index.row() > 0)
+        showPlaylist();
+}
+
+void MainWindow::on_lvPlaylists_doubleClicked(const QModelIndex &index)
+{
+    //ui_tocarPlaylist
 }

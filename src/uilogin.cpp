@@ -68,7 +68,7 @@ void Login::on_btnLogin_clicked()
 
     m_usuario->setAccess_token(QStringLiteral(""));
     if(ui->chkRegistrar->isChecked()){
-        usuariosController->addicionaUsuario(m_usuario);
+        usuariosController->adicionaUsuario(m_usuario);
     }
 
     emit on_escolheuUsuario(m_usuario);

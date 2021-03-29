@@ -16,5 +16,7 @@ public:
 
 private:
     Ui::ResultadoPesquisa *ui;
+    void resizeEvent(QResizeEvent *event)override;
+
 };
 

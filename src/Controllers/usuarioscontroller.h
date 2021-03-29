@@ -22,7 +22,7 @@ public:
     void loadAll();
 
     void clearAll();
-    void addicionaUsuario(Usuario *usuario);
+    void adicionaUsuario(Usuario *usuario);
     void removerUsuario(Usuario *usuario);
 
 private:

@@ -50,7 +50,7 @@ void UiPlaylist::setPlaylist(PlayList *value)
 {
     m_playlist = value;
     //Edicao/Adicao de Playlist
-    m_duracao = *new QTime;
+    m_duracao = *new QTime(0,0,0,0);
     if(m_playlist == nullptr || m_playlist->nome().isEmpty() || m_playlist->userid() <= 0){
 
         ui->stackedWidget->setCurrentIndex(1);
@@ -62,6 +62,7 @@ void UiPlaylist::setPlaylist(PlayList *value)
         });
         ui->stackedWidget->setCurrentIndex(0);
         ui->lblPlaylistNome->setText(m_playlist->nome());
+        ui->lblPlaylistDescricao->setText(m_playlist->descricao());
         const QString detalhes = QStringLiteral("<b>%1 <b> - %2 músicas, %3")
                 .arg(m_usuario->nome())
                 .arg(m_qtdMusicas)

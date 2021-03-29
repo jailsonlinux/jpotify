@@ -35,20 +35,25 @@ private slots:
 
     void on_btnCriarPlaylist_clicked();
 
-    void on_btnEditarPlaylist_clicked();
-
     void on_lvPlaylists_itemSelectionChanged();
+
+    void on_btnPlayPlaylist_clicked();
+
+    void on_lvPlaylists_clicked(const QModelIndex &index);
+
+    void on_lvPlaylists_doubleClicked(const QModelIndex &index);
 
 private:
 
     void swapLoginToSearch();
     void reloadPlaylists();
     void habilitaSeLogado();
+    void showPlaylist();
 
     Ui::MainWindow *ui;
     Login *m_uiLogin;
     UiPlaylist * m_uiPlayList;
-    ResultadoPesquisa *m_uiSearch;
+    ResultadoPesquisa *m_uiResultadoPesquisa;
 
     Usuario *m_usuario;
     Api *api;

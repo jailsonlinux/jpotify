@@ -8,7 +8,7 @@
  * gerenciado pelo QDatabase do Qt.
  */
 AbstractDao::AbstractDao():
-    m_connId(/**QUuid::createUuid().toString()**/ QStringLiteral("connUnica")),
+    m_connId(QUuid::createUuid().toString() /**QStringLiteral("connUnica")**/),
     m_dbConn(create(m_connId))
 {}
 

@@ -81,16 +81,13 @@ void UsuariosController::clearAll()
  * @param usuario
  * insere usuario no bd e notifica.
  */
-void UsuariosController::addicionaUsuario(Usuario *usuario)
+void UsuariosController::adicionaUsuario(Usuario *usuario)
 {
     UsuariosDao usuariosDao;
     const QString nome = usuario->nome();
-    if(usuariosDao.add(usuario)){
-        UsuarioList *usuarioslist = nullptr;
-        usuariosDao.loadFromNome(usuarioslist, nome);
-        usuario = usuarioslist->getUsuarioByName(nome);
-        m_usuarios.addUsuario(usuario);
+    if(usuariosDao.add(usuario)){        
         emit on_usuarioAdicionado();
+        loadAll();
     }
 }
 
