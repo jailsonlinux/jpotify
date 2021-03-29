@@ -63,6 +63,7 @@ QSqlDatabase DbConn::create(const QString &connId)
         dir.mkpath(dbPath);
 
     const QString &databaseName(QStringLiteral("%1/jspot.db").arg(dbPath));
+    qDebug() << "BD em: " << databaseName;
 
     QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"), connId);
     db.setDatabaseName(databaseName);

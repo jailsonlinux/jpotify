@@ -12,5 +12,6 @@
         <file>resources/images/png/buscar.png</file>
         <file>resources/images/png/home.png</file>
         <file>resources/images/png/logo.png</file>
+        <file>resources/images/png/delplaylist.png</file>
     </qresource>
 </RCC>

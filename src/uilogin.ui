@@ -114,16 +114,6 @@
              <bold>true</bold>
             </font>
            </property>
-           <item>
-            <property name="text">
-             <string>Jailson 1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Jailson 2</string>
-            </property>
-           </item>
           </widget>
          </item>
         </layout>

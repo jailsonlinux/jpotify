@@ -18,16 +18,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    uibiblioteca.cpp \
     uilogin.cpp \
+    uiplaylist.cpp \
     uiresultadopesquisa.cpp \
     uiusuarios.cpp
 
 HEADERS += \
     MouseButtomSignaler.h \
     mainwindow.h \
-    uibiblioteca.h \
     uilogin.h \
+    uiplaylist.h \
     uiresultadopesquisa.h \
     uiusuarios.h
 
@@ -44,7 +44,8 @@ HEADERS += $$PWD/../src/Db/abstractdao.h \
            $$PWD/../src/Dao/musicalist.h \
            $$PWD/../src/Dao/musicasdao.h \
            $$PWD/../src/Api/api.h \
-           $$PWD/../src/Controllers/usuarioscontroller.h
+           $$PWD/../src/Controllers/usuarioscontroller.h \
+           $$PWD/../src/Controllers/playlistcontroller.h
 
 
 SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
@@ -59,7 +60,9 @@ SOURCES +=  $$PWD/../src/Db/abstractdao.cpp \
             $$PWD/../src/Dao/musicalist.cpp \
             $$PWD/../src/Dao/musicasdao.cpp \
             $$PWD/../src/Api/api.cpp \
-            $$PWD/../src/Controllers/usuarioscontroller.cpp
+            $$PWD/../src/Controllers/usuarioscontroller.cpp \
+            $$PWD/../src/Controllers/playlistcontroller.cpp
+
 
 
 
@@ -67,8 +70,8 @@ INCLUDEPATH += $$DIR_INCLUDE
 
 FORMS += \
     mainwindow.ui \
-    uibiblioteca.ui \
     uilogin.ui \
+    uiplaylist.ui \
     uiresultadopesquisa.ui \
     uiusuarios.ui
 

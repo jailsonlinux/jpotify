@@ -55,10 +55,20 @@ bool UsuariosDao::add(Usuario *user)
     if (!openConnection()) {
         return false;
     }
+    QString fieldid = QStringLiteral("");
+    QString bindid = QStringLiteral("");
+
+    if(user->id() > 0){
+        QString fieldid = QStringLiteral("id, ");
+        QString bindid = QStringLiteral(":id, ");
+    }
 
     QSqlQuery query(getConnection());
-    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 ( nome, clientid, secret, access_token, autologin) VALUES(:nome, :clientid, :secret, :access_token, :autologin)").arg(m_tablename));
-//    query.bindValue(QStringLiteral(":id"), user->id()); //autoincrement
+    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 ( %2 nome, clientid, secret, access_token, autologin) "
+                                 "VALUES(%3 :nome, :clientid, :secret, :access_token, :autologin)").arg(m_tablename).arg(fieldid).arg(bindid));
+    if(user->id() > 0){
+        query.bindValue(QStringLiteral(":id"), user->id()); //autoincrement
+    }
     query.bindValue(QStringLiteral(":nome"), user->nome());
     query.bindValue(QStringLiteral(":clientid"), user->clientid());
     query.bindValue(QStringLiteral(":secret"), user->secret());

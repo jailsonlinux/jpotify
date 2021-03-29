@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QObject>
 #include <QList>
 
 #include "usuario.h"
@@ -21,7 +22,7 @@ public:
     void setUsuarios(const QList<Usuario *> &usuarios);
 
 private:
-    QList<Usuario*> m_usuarios;
+    QList<Usuario *> m_usuarios;
 
 };
 

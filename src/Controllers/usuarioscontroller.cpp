@@ -5,16 +5,19 @@
  * inicia listas de usuarios do banco, e um usuario em branco.
  */
 UsuariosController::UsuariosController():
-  m_usuarioAtual(new Usuario)
-  ,m_usuarios(new UsuarioList)
+    m_usuarioAtual(new Usuario)
+  ,m_usuarios(*new UsuarioList)
 {
     loadAll();
+
+
 }
 
 /**
  * @brief UsuariosController::getUsuarioAtual
  * @return o usuario atualmente no controle.
  */
+
 Usuario *UsuariosController::getUsuarioAtual() const
 {
     return m_usuarioAtual;
@@ -30,11 +33,16 @@ void UsuariosController::setUsuarioAtual(Usuario *value)
     m_usuarioAtual = value;
 }
 
+Usuario *UsuariosController::getUsuarioByName(const QString &nome)
+{
+    return m_usuarios.getUsuarioByName(nome);
+}
+
 /**
  * @brief UsuariosController::getUsuarios
  * @return a ultima lista de usuarios pesquisada no banco de dados,
  */
-UsuarioList *UsuariosController::getUsuarios() const
+UsuarioList UsuariosController::getUsuarios()
 {
     return m_usuarios;
 }
@@ -46,7 +54,7 @@ UsuarioList *UsuariosController::getUsuarios() const
  */
 void UsuariosController::setUsuarios(UsuarioList *value)
 {
-    m_usuarios->setUsuarios(value->getUsuarios());
+    m_usuarios.setUsuarios(value->getUsuarios());
 }
 
 /**
@@ -57,9 +65,15 @@ void UsuariosController::setUsuarios(UsuarioList *value)
 void UsuariosController::loadAll()
 {
     UsuariosDao usuariosDao;
-    if(usuariosDao.loadAll(m_usuarios)){
+    m_usuarios.clear();
+    if(usuariosDao.loadAll(&m_usuarios)){
         emit on_usuariosLoaded();
     }
+}
+
+void UsuariosController::clearAll()
+{
+    m_usuarios.clear();
 }
 
 /**
@@ -71,7 +85,7 @@ void UsuariosController::addicionaUsuario(Usuario *usuario)
 {
     UsuariosDao usuariosDao;
     if(usuariosDao.add(usuario)){
-        m_usuarios->addUsuario(usuario);
+        m_usuarios.addUsuario(usuario);
         emit on_usuarioAdicionado();
     }
 }
@@ -83,9 +97,9 @@ void UsuariosController::addicionaUsuario(Usuario *usuario)
  */
 void UsuariosController::removerUsuario(Usuario *usuario)
 {
-    UsuariosDao usuariosDao;    
+    UsuariosDao usuariosDao;
     if(usuariosDao.remove(usuario)){
-        m_usuarios->removeUsuario(usuario);
+        m_usuarios.removeUsuario(usuario);
         emit on_usuarioRemovido();
     }
 }

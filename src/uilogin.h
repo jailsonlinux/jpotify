@@ -20,18 +20,17 @@ public:
 
 
     Usuario *getUsuario() const;
-    void setUsuario(Usuario *value);
-    void reloadComboUsuarios();
+    void setUsuario(Usuario *value);    
+    void preencheUsuario(Usuario *usuario);
+
 signals:
-    void on_loginsucess();
+    void on_escolheuUsuario();
     void on_loginErro();
     void on_loginCancel();
 
 private slots:
     void habilitaBotaoLogin();
 
-    void preencheUsuario(const QString &nome);
-    void onLoginSucess();
 
     void on_btnLogin_clicked();
     void on_btnCancelar_clicked();
@@ -44,6 +43,7 @@ private slots:
     void on_btnRemove_clicked();
 
 private:
+    void reloadComboUsuarios();
 
     Ui::Login *ui;
     Usuario *m_usuario;

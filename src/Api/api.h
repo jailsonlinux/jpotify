@@ -15,16 +15,16 @@ class Api : public QObject
     Q_OBJECT
 
 public:
-    Api(QObject *parent);
+    Api(QObject *parent = 0);
     ~Api();
 
     void acessToken();
 
     std::unique_ptr<Usuario> getUsuario() const;
     bool precisaAutenticar();
-    void iniciarAutenticador();
+    void abrirLogin();
     void finalizaServico();
-    void getSpotifyToken();
+    void getApiToken();
 
     QString getClientId() const;
     void setClientId(const QString &clientId);
@@ -43,10 +43,12 @@ public:
 
     void setUsuario(Usuario *usuario);
 
+    QString getApiacess_token() const;
+    void setApiacess_token(const QString &apiacess_token);
+
 signals:
     void on_JaAutenticado();
     void authenticationFailed();
-    void authenticationChanged();
     void newConnection();
     void responseParseado();
 
@@ -69,6 +71,7 @@ private:
     std::unique_ptr<Usuario>m_usuario;
     QDateTime m_dtExpiraToken;
     bool m_jaAutenticado;
+    QString m_apiacess_token;
 
     QString getToken();
 

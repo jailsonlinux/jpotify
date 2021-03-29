@@ -9,7 +9,8 @@ Usuario::Usuario():
     m_nome{QStringLiteral("")},
     m_clientid{QStringLiteral("")},
     m_secret{QStringLiteral("")},
-    m_access_token{QStringLiteral("")},
+    m_access_token{QStringLiteral("")},    
+    m_api_token{QStringLiteral("")},
     m_autologin{false}
 {
 
@@ -127,4 +128,23 @@ bool Usuario::autologin() const
 void Usuario::setAutologin(bool autologin)
 {
     m_autologin = autologin;
+}
+
+/**
+ * @brief Usuario::api_token
+ * @return caso o usuario tenha obtido um token da api.
+ */
+QString Usuario::api_token() const
+{
+    return m_api_token;
+}
+
+/**
+ * @brief Usuario::setApi_token
+ * @param api_token
+ * Define o token capturado da api autenticada.
+ */
+void Usuario::setApi_token(const QString &api_token)
+{
+    m_api_token = api_token;
 }

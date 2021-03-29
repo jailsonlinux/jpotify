@@ -26,12 +26,18 @@ public:
     bool autologin() const;
     void setAutologin(bool autologin);
 
+    QString api_token() const;
+    void setApi_token(const QString &api_token);
+
 private:
     int m_id;
     QString m_nome;
     QString m_clientid; // id da api
     QString m_secret;
     QString m_access_token;
+
+    QString m_api_token;
+
     bool m_autologin;
 
 };

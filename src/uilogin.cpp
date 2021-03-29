@@ -1,6 +1,8 @@
 #include "uilogin.h"
 #include "ui_uilogin.h"
+
 #include <algorithm>
+#include <QIcon>
 
 Login::Login(QWidget *parent) :
     QWidget(parent),
@@ -10,44 +12,18 @@ Login::Login(QWidget *parent) :
     api(new Api(this))
 {
     ui->setupUi(this);
-
-    //ToDo: SetValidator nos inputs para nao permitir espaços.
-
-    //Prencher combo com usuarios previamente registrados quando a tela for ativada.
-    connect(this, &Login::show, [&](){
-        usuariosController->loadAll();
-    });
+    ui->cmbUsuarios->setDuplicatesEnabled(false);
 
     //Prencher combo com usuarios previamente registrados quando a base atualizar.
     connect(usuariosController, &UsuariosController::on_usuariosLoaded, [&](){
-       reloadComboUsuarios();
-    });
-
-    //Sucesso de login, cadastrar caso opcao marcada, ou nao existir e for sucesso.
-
-    connect(api, &Api::on_acessToken, [&](){
-        m_usuario = usuariosController->getUsuarios()->getUsuarioByName(ui->edtNome->text().trimmed());
-
-        if(m_usuario == nullptr) {
-            m_usuario = new Usuario;
-            m_usuario->setId(0);
-            m_usuario->setNome(ui->edtNome->text().trimmed());
-            m_usuario->setClientid(ui->edtUsuario->text().trimmed());
-            m_usuario->setSecret(ui->edtSecret->text().trimmed());
-            m_usuario->setAutologin((int)(ui->chkRegistrar->isChecked()));
-        }
-
-        if(ui->chkRegistrar->isChecked()){
-            usuariosController->addicionaUsuario(m_usuario);
-        }
-
-        emit on_loginsucess();
+        // Repreenche o combo com novos dados..
+        reloadComboUsuarios();
+        //Ao setar os dados do usuario atual, seta o combo, que seta os dados
+        setUsuario(m_usuario);
     });
 
     usuariosController->loadAll();
-
     habilitaBotaoLogin();
-
 }
 
 Login::~Login()
@@ -62,32 +38,40 @@ void Login::habilitaBotaoLogin()
                               !ui->edtSecret->text().isEmpty() ));
 }
 
-void Login::preencheUsuario(const QString &nome)
-{
-    m_usuario = usuariosController->getUsuarios()->getUsuarioByName(nome);
-//    reloadComboUsuarios();
+void Login::preencheUsuario(Usuario *usuario)
+{    
+    m_usuario = usuario;
 
     if(m_usuario == nullptr) {
         m_usuario = new Usuario();
         usuariosController->loadAll();
     }
+
     ui->edtNome->setText(m_usuario->nome());
     ui->edtUsuario->setText(m_usuario->clientid());
     ui->edtSecret->setText(m_usuario->secret());
     ui->chkRegistrar->setChecked(true);
 }
 
-void Login::onLoginSucess()
-{
-
-    emit on_loginsucess();
-
-}
-
 void Login::on_btnLogin_clicked()
 {
-    api->setUsuario(m_usuario);
-    api->iniciarAutenticador();
+    m_usuario = usuariosController->getUsuarioByName(ui->edtNome->text().trimmed());
+
+    if(m_usuario == nullptr) {
+        m_usuario = new Usuario;
+        m_usuario->setId(0);
+        m_usuario->setNome(ui->edtNome->text());
+        m_usuario->setClientid(ui->edtUsuario->text());
+        m_usuario->setSecret(ui->edtSecret->text());
+        m_usuario->setAutologin((int)(ui->chkRegistrar->isChecked()));
+    }
+
+    m_usuario->setAccess_token(QStringLiteral(""));
+    if(ui->chkRegistrar->isChecked()){
+        usuariosController->addicionaUsuario(m_usuario);
+    }
+
+    emit on_escolheuUsuario();
 }
 
 void Login::on_btnCancelar_clicked()
@@ -115,22 +99,24 @@ void Login::on_edtSecret_textChanged(const QString &arg1)
 
 void Login::on_cmbUsuarios_currentIndexChanged(int index)
 {
+    m_usuario = usuariosController->getUsuarioByName(ui->cmbUsuarios->itemText(index));
+
     if(index >= 0){
-        preencheUsuario(ui->cmbUsuarios->currentText());
+        preencheUsuario(m_usuario);
         habilitaBotaoLogin();
     }
 }
 
 void Login::on_btnRemove_clicked()
 {
-    m_usuario = usuariosController->getUsuarios()->getUsuarioByName(ui->edtNome->text().trimmed());
+    m_usuario = usuariosController->getUsuarioByName(ui->edtNome->text().trimmed());
     if(m_usuario != nullptr) {
         usuariosController->removerUsuario(m_usuario);
         ui->cmbUsuarios->removeItem(ui->cmbUsuarios->findText(m_usuario->nome()));
-        usuariosController->loadAll();
+        reloadComboUsuarios();
     }
 
-    preencheUsuario("");
+    preencheUsuario(m_usuario);
 
 }
 
@@ -138,12 +124,9 @@ void Login::reloadComboUsuarios()
 {
     ui->cmbUsuarios->clear();
 
-    std::for_each(std::begin(usuariosController->getUsuarios()->getUsuarios()), std::end(usuariosController->getUsuarios()->getUsuarios()),
-                  [&](Usuario *item){
-        ui->cmbUsuarios->addItem(item->nome());
+    std::for_each(std::begin(usuariosController->getUsuarios().getUsuarios()), std::end(usuariosController->getUsuarios().getUsuarios()), [&](Usuario *item){
+        ui->cmbUsuarios->addItem(QIcon(QStringLiteral(":resources/images/png/user.png")), item->nome());
     });
-
-    ui->cmbUsuarios->setCurrentIndex(ui->cmbUsuarios->findText(m_usuario->nome().trimmed()));
 }
 
 Usuario *Login::getUsuario() const
@@ -154,4 +137,8 @@ Usuario *Login::getUsuario() const
 void Login::setUsuario(Usuario *value)
 {
     m_usuario = value;
+    if(m_usuario != nullptr){
+        const int idx = ui->cmbUsuarios->findText(m_usuario->nome());
+        ui->cmbUsuarios->setCurrentIndex(idx);
+    }
 }

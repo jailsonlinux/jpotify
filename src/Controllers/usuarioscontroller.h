@@ -14,16 +14,19 @@ public:
     Usuario *getUsuarioAtual() const;
     void setUsuarioAtual(Usuario *value);
 
-    UsuarioList *getUsuarios() const;
+    Usuario *getUsuarioByName(const QString &nome);
+
+    UsuarioList getUsuarios() ;
     void setUsuarios(UsuarioList *value);
 
     void loadAll();
+    void clearAll();
     void addicionaUsuario(Usuario *usuario);
     void removerUsuario(Usuario *usuario);
 
 private:
     Usuario *m_usuarioAtual;
-    UsuarioList *m_usuarios;
+    UsuarioList m_usuarios;
 
 signals:
     void on_usuariosChanged();
