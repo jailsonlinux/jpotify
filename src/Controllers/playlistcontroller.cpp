@@ -7,15 +7,16 @@ PlayListController::PlayListController()
 
 void PlayListController::loadAll()
 {
-    PlaylistDao playlistDao;
-    playlistDao.loadAll(&m_playlists);
+    PlaylistDao * playlistDao = new PlaylistDao(m_usuario->id());
+    playlistDao->loadAll(&m_playlists);
     emit on_playlistsCarregado();
+
 }
 
 void PlayListController::clearAll()
 {
-    PlaylistDao playlistDao;
-    if(playlistDao.removeAll()){
+    PlaylistDao * playlistDao = new PlaylistDao(m_usuario->id());
+    if(playlistDao->removeAll()){
         m_playlists.clear();
         m_playlistAtual = nullptr;
 
@@ -25,10 +26,8 @@ void PlayListController::clearAll()
 
 bool PlayListController::addicionarPlaylist(PlayList *playlist)
 {
-    PlaylistDao playlistDao;
-    playlistDao.setUsuarioid(m_usuario->id());
-
-    const bool adicionou = playlistDao.add(playlist);
+    PlaylistDao * playlistDao = new PlaylistDao(m_usuario->id());
+    const bool adicionou = playlistDao->add(playlist);
     if(adicionou)
         emit on_playlistsChanged();
 
@@ -37,9 +36,9 @@ bool PlayListController::addicionarPlaylist(PlayList *playlist)
 
 bool PlayListController::removerPlaylist(PlayList *playlist)
 {
-    PlaylistDao playlistDao;
-    playlistDao.setUsuarioid(m_usuario->id());
-    const bool removeu  = playlistDao.remove(playlist);
+    PlaylistDao * playlistDao = new PlaylistDao(m_usuario->id());
+    playlistDao->setUsuarioid(m_usuario->id());
+    const bool removeu  = playlistDao->remove(playlist);
     if(removeu)
         emit on_playlistsChanged();
 

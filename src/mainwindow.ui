@@ -1591,7 +1591,7 @@
                 <bool>false</bool>
                </property>
                <property name="text">
-                <string>Cria&amp;r Playlist</string>
+                <string>Cria&amp;r</string>
                </property>
                <property name="icon">
                 <iconset resource="icons.qrc">
@@ -2065,7 +2065,7 @@
                 <bool>false</bool>
                </property>
                <property name="text">
-                <string>&amp;Editar Playlist</string>
+                <string>&amp;Editar</string>
                </property>
                <property name="icon">
                 <iconset resource="icons.qrc">
@@ -2539,7 +2539,7 @@
                 <bool>false</bool>
                </property>
                <property name="text">
-                <string>E&amp;xcluir Playlist</string>
+                <string>E&amp;xcluir</string>
                </property>
                <property name="icon">
                 <iconset resource="icons.qrc">

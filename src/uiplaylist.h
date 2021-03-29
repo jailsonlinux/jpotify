@@ -31,7 +31,7 @@ public:
 
 signals:
     void on_cancelarPlaylist();
-    void on_salvarPlayList();
+    void on_salvarPlayList(PlayList *m_playlist);
     void on_excluirPlayList(PlayList *m_playlist);
 
 private slots:

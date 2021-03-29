@@ -12,6 +12,12 @@ PlaylistDao::PlaylistDao(const int userid) :
     createTable();
 }
 
+PlaylistDao::PlaylistDao():
+    m_tablename(QStringLiteral("playlist"))
+{
+    createTable();
+}
+
 /**
  * @brief PlaylistDao::loadAll
  * @param playlists
@@ -58,9 +64,17 @@ bool PlaylistDao::add(PlayList *playlist)
     if (!openConnection()) {
         return false;
     }
+    QString fieldid = QStringLiteral("");
+    QString bindid = QStringLiteral("");
+
+    if(playlist->getId() > 0){
+        QString fieldid = QStringLiteral("id, ");
+        QString bindid = QStringLiteral(":id, ");
+    }
 
     QSqlQuery query(getConnection());
-    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 (id, userid, nome, descricao, apiid) VALUES(:id, :userid, :nome, :descricao, :apiid)").arg(m_tablename));
+    query.prepare(QStringLiteral("INSERT OR REPLACE INTO %1 (%2 userid, nome, descricao, apiid) "
+                                 "VALUES(%3  :userid, :nome, :descricao, :apiid)").arg(m_tablename).arg(fieldid).arg(bindid));
     query.bindValue(QStringLiteral(":id"), playlist->getId());
     query.bindValue(QStringLiteral(":userid"), playlist->userid());
     query.bindValue(QStringLiteral(":nome"), playlist->nome());
@@ -69,7 +83,7 @@ bool PlaylistDao::add(PlayList *playlist)
 
     const auto exec = query.exec();
     if (!exec)
-        qCritical() << "Erro tentando inserir nova playlist" << query.lastError().text();
+        qCritical() << "Erro tentando inserir nova playlist" << query.lastError().text() << "Query: " << query.lastQuery();
 
     closeConnection();
     return exec;

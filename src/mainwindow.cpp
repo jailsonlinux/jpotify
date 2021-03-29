@@ -82,13 +82,15 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     //Ao salvar pede ao controler para persistir. E atualizar a lista de playlists.
-    connect(m_uiPlayList, &UiPlaylist::on_salvarPlayList, [&]() {
-          playlistController->addicionarPlaylist(m_uiPlayList->getPlaylist());
+    connect(m_uiPlayList, &UiPlaylist::on_salvarPlayList, [&](PlayList *playlist){
+          playlistController->setUsuario(m_usuario);
+          playlistController->addicionarPlaylist(playlist);
           ui->stackedWidget->setCurrentWidget(m_uiSearch);
     });
 
     //Ao salvar pede ao controler para persistir. E atualizar a lista de playlists.
     connect(m_uiPlayList, &UiPlaylist::on_excluirPlayList, [&](PlayList *playlist) {
+          playlistController->setUsuario(m_usuario);
           playlistController->removerPlaylist(playlist);
           reloadPlaylists();
     });
@@ -135,11 +137,12 @@ void MainWindow::on_btnBuscar_clicked()
  */
 void MainWindow::on_btnCriarPlaylist_clicked()
 {
-    ui->stackedWidget->setCurrentWidget(m_uiPlayList);
+
     PlayList * new_playlist = nullptr;
     m_uiPlayList->setQtdMusicas(0);
     m_uiPlayList->setUsuario(m_usuario);
     m_uiPlayList->setPlaylist(new_playlist);
+    ui->stackedWidget->setCurrentWidget(m_uiPlayList);
 }
 
 void MainWindow::swapLoginToSearch()

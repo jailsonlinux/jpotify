@@ -70,11 +70,15 @@ void UiPlaylist::setPlaylist(PlayList *value)
 
 void UiPlaylist::on_btnSalvar_clicked()
 {
+    if(m_playlist == nullptr)
+        m_playlist= new PlayList();
+
+    m_playlist->setUsuarioid(m_usuario->id());
     m_playlist->setNome(ui->edtNome->text().trimmed());
     m_playlist->setDescricao(ui->edtDescricao->text().trimmed());
     m_playlist->setUsuarioid(m_usuario->id());
 
-    emit on_salvarPlayList();
+    emit on_salvarPlayList(m_playlist);
 }
 
 void UiPlaylist::setUsuario(Usuario *usuario)

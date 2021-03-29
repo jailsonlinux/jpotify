@@ -18,7 +18,7 @@ class PlaylistDao : public AbstractDao
 
 public:
     PlaylistDao(const int userid);
-    PlaylistDao() = default;
+    PlaylistDao();
 
     bool loadAll(Playlists *playlists);
     bool loadFromId(Playlists *playlists, const int id);
