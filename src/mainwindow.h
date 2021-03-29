@@ -35,6 +35,10 @@ private slots:
 
     void on_btnCriarPlaylist_clicked();
 
+    void on_btnEditarPlaylist_clicked();
+
+    void on_lvPlaylists_itemSelectionChanged();
+
 private:
 
     void swapLoginToSearch();

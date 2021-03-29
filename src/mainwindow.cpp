@@ -58,11 +58,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Sucesso ao obter a chave de autenticacao da API.
     connect(api, &Api::on_Conectado, [=](){
-        //ToDo: Colocar icone de logado.        
+        //ToDo: Colocar icone de logado.
+
         ui->lblIconUser->setPixmap(api->getAcessTokenn().size() > 0? QPixmap(QStringLiteral(":/resources/images/png/userlogado.png"))
                                                                    : QPixmap(QStringLiteral(":/resources/images/png/user.png")));
+        habilitaSeLogado();
 
         //Atualizar playlists
+        m_usuario = m_uiLogin->getUsuario();
         reloadPlaylists();
 
         //exibir tela de buscas
@@ -102,6 +105,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(playlistController, &PlayListController::on_playlistsChanged, [=](){
        reloadPlaylists();
     });
+
+    habilitaSeLogado();
 
 
 }
@@ -158,7 +163,7 @@ void MainWindow::swapLoginToSearch()
 void MainWindow::reloadPlaylists()
 {
     ui->lvPlaylists->clear();
-
+    playlistController->setUsuario(m_usuario);
     playlistController->loadAll();
     std::for_each(std::begin(playlistController->playlists().getPlaylists()), std::end(playlistController->playlists().getPlaylists()),
                   [=](PlayList *playlist){
@@ -168,5 +173,34 @@ void MainWindow::reloadPlaylists()
 
 void MainWindow::habilitaSeLogado()
 {
+    const bool logado  = api->getAcessTokenn().size() > 0;
+    ui->btnCriarPlaylist->setEnabled(logado);
+    ui->btnExcluirPlaylist->setEnabled(logado);
+    ui->btnEditarPlaylist->setEnabled(logado);
+    ui->btnBuscar->setEnabled(logado);
+    ui->lvPlaylists->setEnabled(logado || ui->lvPlaylists->count() == 0);
+}
 
+void MainWindow::on_btnEditarPlaylist_clicked()
+{
+    if(ui->lvPlaylists->selectedItems().size()>0){
+        currentPlaylist = playlistController->playlists().getPlaylistByName(ui->lvPlaylists->selectedItems().first()->text());
+        if(currentPlaylist != nullptr){
+            m_uiPlayList->setUsuario(m_usuario);
+            m_uiPlayList->setPlaylist(currentPlaylist);
+            ui->stackedWidget->setCurrentWidget(m_uiPlayList);
+        }
+    }
+}
+
+void MainWindow::on_lvPlaylists_itemSelectionChanged()
+{
+    if(ui->lvPlaylists->selectedItems().size()>0){
+        currentPlaylist = playlistController->playlists().getPlaylistByName(ui->lvPlaylists->selectedItems().first()->text());
+        if(currentPlaylist != nullptr){
+            m_uiPlayList->setUsuario(m_usuario);
+            m_uiPlayList->setPlaylist(currentPlaylist);
+            ui->stackedWidget->setCurrentWidget(m_uiPlayList);
+        }
+    }
 }

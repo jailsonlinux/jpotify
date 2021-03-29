@@ -1609,7 +1609,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btnEditarPlaylist_2">
+              <widget class="QPushButton" name="btnEditarPlaylist">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
