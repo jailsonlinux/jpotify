@@ -6,6 +6,7 @@
 #include <QtNetwork/QTcpServer>
 #include <QDateTime>
 #include <memory>
+#include <QNetworkRequest>
 
 #include "../Dao/usuario.h"
 
@@ -25,6 +26,9 @@ public:
     void abrirLogin();
     void finalizaServico();
     void getApiToken();
+
+    QNetworkRequest montaRequisicao(const QString &uri);
+    QJsonObject pesquisaMusicas(const QString &termo);
 
     QString getClientId() const;
     void setClientId(const QString &clientId);

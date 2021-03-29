@@ -43,7 +43,20 @@
     </spacer>
    </item>
    <item>
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">color:red</string>
+     </property>
+     <property name="text">
+      <string>*Use o botão direito do mouse para adicionar a música selecionada a uma playlist</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTableWidget" name="tabelaResultados">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
@@ -162,6 +175,11 @@ QTableWidget QTableCornerButton::section {
         <weight>75</weight>
         <bold>true</bold>
        </font>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>.</string>
       </property>
      </column>
     </widget>

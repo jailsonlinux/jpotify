@@ -344,10 +344,12 @@ void Tests::testUsuariosDao()
     usersDao.loadAll(usuarios.get());
     QCOMPARE(usuarios.get()->size(), 0);
 
+    user.get()->setId(0);//sem id insere
     usersDao.add(user.get());
     usersDao.loadAll(usuarios.get());
     QCOMPARE(usuarios.get()->size(), 1);
 
+    user.get()->setId(1);//com id atualiza
     usuarios.get()->clear();
     usersDao.loadFromId(usuarios.get(), user.get()->id());
     QCOMPARE(usuarios.get()->size(), 1);
@@ -362,7 +364,7 @@ void Tests::testUsuariosDao()
 void Tests::testPlayListsDao()
 {
     initUsuario();
-    PlayList *playlist =  createPlayList(1,
+    PlayList *playlist =  createPlayList(0,
                                          QStringLiteral("Rock"),
                                          QStringLiteral("Bandas de Rock 80"),
                                          QStringLiteral("asdfasdfasdf"),
@@ -370,6 +372,7 @@ void Tests::testPlayListsDao()
                                          );
 
     Playlists playlists = Playlists();
+    playlists.setUsuarioid(user.get()->id());
 
     PlaylistDao playlistDao = PlaylistDao(user.get()->id());
 

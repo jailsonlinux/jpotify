@@ -73,7 +73,6 @@ void UiPlaylist::setPlaylist(PlayList *value)
 }
 
 
-
 void UiPlaylist::on_btnSalvar_clicked()
 {
     if(m_playlist == nullptr)

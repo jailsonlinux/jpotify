@@ -9,6 +9,7 @@
 #include "Dao/usuario.h"
 #include "Api/api.h"
 #include "Controllers/playlistcontroller.h"
+#include "Controllers/pesquisacontroller.h"
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +44,8 @@ private slots:
 
     void on_lvPlaylists_doubleClicked(const QModelIndex &index);
 
+    void on_edtSearch_returnPressed();
+
 private:
 
     void swapLoginToSearch();
@@ -59,8 +62,8 @@ private:
     Api *api;
 
     PlayListController *playlistController;
+    PesquisaController *pesquisaController;
     PlayList *currentPlaylist;
-    Playlists *playlists;
 
 };
 

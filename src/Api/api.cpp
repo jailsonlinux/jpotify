@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QCoreApplication>
@@ -14,8 +13,8 @@
 #include <QTimer>
 
 Api::Api(QObject *parent):
-   QObject(parent)
-    //   m_NetManager(std::make_unique<QNetworkAccessManager>())
+    QObject(parent)
+  //   m_NetManager(std::make_unique<QNetworkAccessManager>())
   ,m_servidor(std::make_unique<QTcpServer>(nullptr))
   ,m_usuario(std::make_unique<Usuario>())
   ,m_jaAutenticado(false)
@@ -125,8 +124,8 @@ void Api::abrirLogin()
     chromeProcess->start(program, arguments);
     chromeProcess->waitForStarted(15000);
 
-//    chromeProcess->close();
-//    chromeProcess->kill();
+    //    chromeProcess->close();
+    //    chromeProcess->kill();
 
 }
 
@@ -145,21 +144,21 @@ void Api::getApiToken(){
         return;
     }
 
-    //Pedir um novo token para o usuario logado.    
+    //Pedir um novo token para o usuario logado.
     QNetworkRequest request(QStringLiteral("https://accounts.spotify.com/api/token"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     request.setRawHeader("Authorization", "Basic " + QStringLiteral("%1:%2").arg(m_usuario.get()->clientid(),
-                              m_usuario.get()->secret()).toUtf8().toBase64());
+                                                                                 m_usuario.get()->secret()).toUtf8().toBase64());
 
     const QString postData(QStringLiteral("grant_type=authorization_code&code=%1&redirect_uri=%2")
-                       .arg(m_usuario.get()->access_token(), m_redirectUrl));
+                           .arg(m_usuario.get()->access_token(), m_redirectUrl));
 
     // Aguardar resposta do POST...
     QNetworkAccessManager networkManager;
     auto *reply = networkManager.post(request, postData.toUtf8());
     while (!reply->isFinished())
-            QCoreApplication::processEvents();
+        QCoreApplication::processEvents();
 
     if (reply->error() != QNetworkReply::NoError)
         qCritical() << "Erro no request" << reply->error() << reply->errorString();
@@ -192,6 +191,38 @@ void Api::getApiToken(){
     }
 
     emit on_Erro(QStringLiteral("Error ao ler mensagem"));
+}
+
+QNetworkRequest Api::montaRequisicao(const QString &uri)
+{
+    QUrl url("https://api.spotify.com/v1/" + uri);
+    QNetworkRequest request(url);
+    if(getAcessTokenn().isEmpty()){
+        qWarning() << QStringLiteral("AcessToken vazio! url: ") << url;
+    }
+    request.setRawHeader("Authorization", QStringLiteral("Bearer %1").arg(getAcessTokenn()).toUtf8());
+
+    return request;
+}
+
+
+QJsonObject Api::pesquisaMusicas(const QString &termo)
+{
+    const QString resource = QStringLiteral("search?q=%1&type=track").arg(termo);
+    QNetworkAccessManager networkManager;
+    auto *reply = networkManager.get(montaRequisicao(resource));
+
+    while(!reply->isFinished())
+        QCoreApplication::processEvents();
+
+    QJsonParseError parseError{};
+    auto json = QJsonDocument::fromJson(reply->readAll(), &parseError);
+
+    if (parseError.error != QJsonParseError::NoError)
+        qCritical() << "Error ao parsear JSON" << parseError.errorString();
+    reply->deleteLater();
+
+    return json.object();
 }
 
 QString Api::getClientId() const

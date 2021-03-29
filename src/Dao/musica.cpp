@@ -1,4 +1,5 @@
 #include "musica.h"
+#include <QTime>
 
 Musica::Musica():
     m_key{QStringLiteral("") },
@@ -205,4 +206,13 @@ QString Musica::imagem() const
 void Musica::setImagem(const QString &imagem)
 {
     m_imagem = imagem;
+}
+
+QString Musica::getDuracaoMinSec()
+{
+    QTime tempo(0,0,0,0);
+    QTime t;
+    t = tempo.addMSecs(m_duracao);    
+    return t.toString("mm:ss");
+
 }

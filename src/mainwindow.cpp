@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     , m_usuario(new Usuario)
     , api(new Api(this))
     , playlistController(new PlayListController())
+    , pesquisaController(new PesquisaController(api))
     , currentPlaylist(new PlayList())
-    , playlists(new Playlists())
 {
     ui->setupUi(this);
 
@@ -107,8 +107,18 @@ MainWindow::MainWindow(QWidget *parent)
        reloadPlaylists();
     });
 
-    habilitaSeLogado();
+    //Ao pesquisar atualiza a lista de resultados...
+    // A partir de la gerenciar quem entra na playlist ou tocar...
+    connect(pesquisaController, &PesquisaController::on_pesquisaConcluida, [=](){        
+       ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
+       m_uiResultadoPesquisa->setMusicaList(pesquisaController->musicaList());
+       m_uiResultadoPesquisa->setTermo(ui->edtSearch->text().trimmed());
+       m_uiResultadoPesquisa->setPlaylists(playlistController->playlists());
+       ui->edtSearch->clear();
+    });
 
+
+    habilitaSeLogado();
 
 }
 
@@ -214,4 +224,9 @@ void MainWindow::on_lvPlaylists_clicked(const QModelIndex &index)
 void MainWindow::on_lvPlaylists_doubleClicked(const QModelIndex &index)
 {
     //ui_tocarPlaylist
+}
+
+void MainWindow::on_edtSearch_returnPressed()
+{
+    pesquisaController->pesquisarMusicas(ui->edtSearch->text().trimmed());
 }

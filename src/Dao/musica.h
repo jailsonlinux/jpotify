@@ -3,8 +3,9 @@
 #include <QObject>
 #include <QString>
 
-class Musica
+class Musica :public QObject
 {    
+    Q_OBJECT
 public:
     explicit Musica();
 
@@ -37,6 +38,8 @@ public:
 
     QString imagem() const;
     void setImagem(const QString &imagem);
+
+    QString getDuracaoMinSec();
 
 private:
     QString m_key;
