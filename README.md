@@ -14,6 +14,11 @@ Build in Qt 5.15.2 , SO Linux.
 ![Alt text](./blob/tests1.png?raw=true "Testes")
 
 #### Telas
-![Alt text](./blob/login.png?raw=true "Inicial")
+![Alt text](./blob/login.png?raw=true "Login")
+![Alt text](./blob/logado.png?raw=true "Logado")
+![Alt text](./blob/loginok.png?raw=true "Login ok")
+![Alt text](./blob/playlistAdd.png?raw=true "add")
+![Alt text](./blob/playlistAdd.png?raw=true "Login ok")
+![Alt text](./blob/playlistadded.png?raw=true "Login ok")
 
 

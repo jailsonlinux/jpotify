@@ -2585,21 +2585,6 @@
                <pointsize>12</pointsize>
               </font>
              </property>
-             <item>
-              <property name="text">
-               <string>Minha playlist 1</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Minha playlist 2</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Minha playlist 3</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>

@@ -39,6 +39,7 @@ private:
 
     void swapLoginToSearch();
     void reloadPlaylists();
+    void habilitaSeLogado();
 
     Ui::MainWindow *ui;
     Login *m_uiLogin;

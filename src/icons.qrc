@@ -13,5 +13,6 @@
         <file>resources/images/png/home.png</file>
         <file>resources/images/png/logo.png</file>
         <file>resources/images/png/delplaylist.png</file>
+        <file>resources/images/png/userlogado.png</file>
     </qresource>
 </RCC>

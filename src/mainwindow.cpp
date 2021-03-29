@@ -58,13 +58,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Sucesso ao obter a chave de autenticacao da API.
     connect(api, &Api::on_Conectado, [=](){
-        ui->stackedWidget->setCurrentWidget(m_uiPlayList);
-
-        //ToDo: Colocar icone de logado.
+        //ToDo: Colocar icone de logado.        
+        ui->lblIconUser->setPixmap(api->getAcessTokenn().size() > 0? QPixmap(QStringLiteral(":/resources/images/png/userlogado.png"))
+                                                                   : QPixmap(QStringLiteral(":/resources/images/png/user.png")));
 
         //Atualizar playlists
+        reloadPlaylists();
 
-        //exibir tela de
+        //exibir tela de buscas
+        ui->stackedWidget->setCurrentWidget(m_uiSearch);
     });
 
     //Confirma e tenta logar
@@ -100,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(playlistController, &PlayListController::on_playlistsChanged, [=](){
        reloadPlaylists();
     });
+
 
 }
 
@@ -161,4 +164,9 @@ void MainWindow::reloadPlaylists()
                   [=](PlayList *playlist){
         ui->lvPlaylists->addItem(playlist->nome());
     });
+}
+
+void MainWindow::habilitaSeLogado()
+{
+
 }

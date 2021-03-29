@@ -11,7 +11,6 @@ Build in Qt 5.15.2 , SO Linux.
 ```
 
 #### Testes
-<<<<<<< HEAD
 ![Alt text](./blob/tests1.png?raw=true "Testes")
 
 #### Telas
