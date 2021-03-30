@@ -30,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     , pesquisaController(new PesquisaController(api))
     , currentPlaylist(new PlayList())
     , m_musicaAtualTocando(nullptr)
-    , tocando{false}
-    , pausado{false}
     , mediaPlaylist(new QMediaPlaylist())
     , mediaPlayer(new QMediaPlayer(this))
 
@@ -157,6 +155,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(mediaPlayer, &QMediaPlayer::durationChanged, ui->playbar, &QSlider::setMaximum);
     connect(mediaPlayer, &QMediaPlayer::mediaChanged, [&](){ui->playbar->setValue(0);});
 
+    //Estados do player tocando, parado ou pausado;;;
+
+    connect(mediaPlayer, &QMediaPlayer::stateChanged, this, [&]()
+    {
+        if (mediaPlayer->state() == QMediaPlayer::StoppedState ||
+                mediaPlayer->state() == QMediaPlayer::PausedState) {
+            ui->btnPlayPause->setIcon(QIcon(QStringLiteral(":/resources/images/png/pause.png")));
+        } else{
+            ui->btnPlayPause->setIcon(QIcon(QStringLiteral(":/resources/images/png/play42.png")));
+        }
+    });
 
     habilitaSeLogado();
 
@@ -164,6 +173,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    mediaPlayer->stop();
+    mediaPlaylist->clear();
     delete ui;
 }
 
@@ -337,4 +348,14 @@ void MainWindow::on_lvPlaylists_doubleClicked(const QModelIndex &index)
 void MainWindow::on_edtSearch_returnPressed()
 {
     pesquisaController->pesquisarMusicas(ui->edtSearch->text().trimmed());
+}
+
+void MainWindow::on_btnPlayPause_clicked()
+{
+    if (mediaPlayer->state() == QMediaPlayer::StoppedState ||
+            mediaPlayer->state() == QMediaPlayer::PausedState) {
+        mediaPlayer->play();
+    } else{
+        mediaPlayer->pause();
+    }
 }

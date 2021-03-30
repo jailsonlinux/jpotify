@@ -15,5 +15,6 @@
         <file>resources/images/png/delplaylist.png</file>
         <file>resources/images/png/userlogado.png</file>
         <file>resources/images/png/appico.png</file>
+        <file>resources/images/png/pause.png</file>
     </qresource>
 </RCC>

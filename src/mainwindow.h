@@ -50,6 +50,8 @@ private slots:
 
     void on_edtSearch_returnPressed();
 
+    void on_btnPlayPause_clicked();
+
 private:
 
     void swapLoginToSearch();
@@ -73,8 +75,7 @@ private:
     PlayList *currentPlaylist;
     Musica *m_musicaAtualTocando;
 
-    bool tocando;
-    bool pausado;
+
     QMediaPlaylist *mediaPlaylist;
     QMediaPlayer *mediaPlayer;
 

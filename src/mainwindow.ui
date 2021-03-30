@@ -2888,7 +2888,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btnBack_2">
+            <widget class="QPushButton" name="btnPlayPause">
              <property name="minimumSize">
               <size>
                <width>42</width>
@@ -3350,21 +3350,14 @@
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton {
-    border-image:url(:/resources/images/png/play42.png);
-    background-repeat: no-repeat;
-    width: 42px;
-    height: 42px;
-}
-
-QPushButton:hover {
-    border-image: url(:/resources/images/png/playBtn42.png);
-    background-repeat: no-repeat;
-}
-</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/resources/images/png/playBtn42.png</normaloff>:/resources/images/png/playBtn42.png</iconset>
              </property>
              <property name="iconSize">
               <size>
