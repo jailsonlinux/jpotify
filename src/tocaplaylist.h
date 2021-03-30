@@ -5,6 +5,7 @@
 #include "Dao/musicalist.h"
 #include "Dao/playlist.h"
 #include "Dao/playlists.h"
+#include "Dao/usuario.h"
 
 namespace Ui {
 class TocaPlaylist;
@@ -18,11 +19,17 @@ public:
     explicit TocaPlaylist(QWidget *parent = nullptr);
     ~TocaPlaylist();
 
-    void setMusicaList(MusicaList *musicaList);
-    void setPlaylists(Playlists playlists);
+    void setPlaylist(PlayList *playlist);
 
+    void setUsuario(Usuario *usuario);
+
+signals:
+    void on_playCurrentMusica(const int playlistid, Musica *musica, const int rowIdx);
 protected:
     void resizeEvent(QResizeEvent *event)override;
+
+private slots:
+    void on_tabelaResultados_doubleClicked(const QModelIndex &index);
 
 private:
     void preencheGrid();
@@ -39,6 +46,9 @@ private:
 
     Musica *m_musica;
     MusicaList *m_musicaList;
-    Playlists m_playlists;
+    PlayList *m_playlist;
+
+    QTime m_duracao;
+    Usuario *m_usuario;
 };
 

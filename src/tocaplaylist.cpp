@@ -1,5 +1,6 @@
 #include "tocaplaylist.h"
 #include "ui_tocaplaylist.h"
+#include "widgetutil.h"
 
 /**
  * @brief TocaPlaylist::TocaPlaylist
@@ -7,7 +8,11 @@
  */
 TocaPlaylist::TocaPlaylist(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TocaPlaylist)
+    ui(new Ui::TocaPlaylist),
+    m_musica(nullptr),
+    m_musicaList(new MusicaList),
+    m_playlist(new PlayList),
+    m_usuario(new Usuario)
 {
     ui->setupUi(this);
 }
@@ -20,24 +25,32 @@ TocaPlaylist::~TocaPlaylist()
     delete ui;
 }
 
-/**
- * @brief TocaPlaylist::setMusicaList
- * @param musicaList
- */
-void TocaPlaylist::setMusicaList(MusicaList *musicaList)
-{
-    m_musicaList = musicaList;
-
-    preencheGrid();
-}
 
 /**
  * @brief TocaPlaylist::setPlaylists
  * @param playlists
  */
-void TocaPlaylist::setPlaylists(Playlists playlists)
+void TocaPlaylist::setPlaylist(PlayList *playlist)
 {
-    m_playlists = playlists;
+    m_playlist = playlist;
+    m_musicaList = m_playlist->getMusicas();
+
+    m_duracao = m_playlist->getDuracaoTotal();
+    //Edicao/Adicao de Playlist
+
+    if(m_playlist != nullptr || !m_playlist->nome().isEmpty()){
+
+        ui->lblPlaylistNome->setText(m_playlist->nome());
+        ui->lblPlaylistDescricao->setText(m_playlist->descricao());
+
+        const QString detalhes = QStringLiteral("<b>%1 <b> - %2 músicas, duração %3")
+                .arg(m_usuario->nome())
+                .arg(m_playlist->getMusicas()->size())
+                .arg(m_playlist->getDuracaoToString());
+
+        ui->lblInfo->setText(detalhes);
+        preencheGrid();
+    }
 
 }
 
@@ -47,18 +60,9 @@ void TocaPlaylist::setPlaylists(Playlists playlists)
  */
 void TocaPlaylist::resizeEvent(QResizeEvent *event)
 {
-    constexpr int col0{60};
-    constexpr int col3{120};
-    constexpr int col4{1};
-    const int col1 = (this->width() - (col0-10 + col3)) / 2;
-    const int col2 = (this->width() - (col0-10 + col3)) / 2;
+    //Devido a semelhança da pesquisa com a playlist do usuario, foi centralizado numa util..
+    WidgetUtil::resizeGrid(this->width(), ui->tabelaResultados);
 
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Indice, col0); //idx
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Nome, col1); //nome
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Album, col2); //album
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Duracao, col3);  //tempo
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Key, col4);  //chave escondida
-    ui->tabelaResultados->setColumnHidden(ColunasTabela::Key, true);
     QWidget::resizeEvent(event);
 }
 
@@ -67,35 +71,24 @@ void TocaPlaylist::resizeEvent(QResizeEvent *event)
  */
 void TocaPlaylist::preencheGrid()
 {
-    ui->tabelaResultados->clearContents();
-    ui->tabelaResultados->setRowCount(0);
+    WidgetUtil::preencheGrid(ui->tabelaResultados, m_musicaList);
+}
 
-    std::for_each(std::begin(m_musicaList->getMusicas()), std::end(m_musicaList->getMusicas()), [=](Musica *musica){
-        ui->tabelaResultados->insertRow(ui->tabelaResultados->rowCount());
-//        qDebug() << "url imagem:" << musica->imagem();
-//        qDebug() << "musica key:" << musica->key();
+void TocaPlaylist::setUsuario(Usuario *usuario)
+{
+    m_usuario = usuario;
+}
 
-        //ToDo: Ler icones para Col 0...
-        QTableWidgetItem *itemIndice = new QTableWidgetItem(QString::number(ui->tabelaResultados->rowCount()).rightJustified(2, '0'));
-        itemIndice->setFlags(itemIndice->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Indice, itemIndice);
+void TocaPlaylist::on_tabelaResultados_doubleClicked(const QModelIndex &index)
+{
+    QTableWidgetItem *item =  ui->tabelaResultados->item(ui->tabelaResultados->currentRow(), ColunasTabela::Key);
+    const QString keyMusica = item->text();
+    Musica *musica = m_musicaList->getMusicaByKey(keyMusica);
+    const int playlistId = m_playlist->getId();
 
-
-        QTableWidgetItem *itemNome = new QTableWidgetItem(musica->nome());
-        itemNome->setFlags(itemNome->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem(ui->tabelaResultados->rowCount()-1, ColunasTabela::Nome, itemNome);
-
-        QTableWidgetItem *itemAlbum = new QTableWidgetItem(musica->album());
-        itemAlbum->setFlags(itemAlbum->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Album, itemAlbum);
-
-        QTableWidgetItem *itemDuracao = new QTableWidgetItem(musica->getDuracaoMinSec());
-        itemDuracao->setFlags(itemDuracao->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Duracao, itemDuracao);
-
-        //Esconde a chave aqui
-        QTableWidgetItem *itemChave = new QTableWidgetItem(musica->key());
-        itemChave->setFlags(itemChave->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Key, itemChave);
-    });
+    if(musica != nullptr && !musica->key().isEmpty() && playlistId > -1){
+        musica->setPlaylistid(m_playlist->getId());
+        const int rowIdx = index.row();
+        emit on_playCurrentMusica(playlistId, musica, rowIdx);
+    }
 }

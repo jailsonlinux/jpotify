@@ -18,4 +18,5 @@ Build in Qt 5.15.2 , SO Linux.
 ![Alt text](./blob/loginok.png?raw=true "Login ok")
 ![Alt text](./blob/addplaylistesearch.png?raw=true "busca e menu ok")
 ![Alt text](./blob/playlistAdd.png?raw=true "add")
+![Alt text](./blob/tocaplaylist.png?raw=true "tocando")
 

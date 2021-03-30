@@ -2,7 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QString>
-
+#include <QtMultimedia/QMediaPlaylist>
+#include <QtMultimedia/QMediaPlayer>
+#include <QUrl>
 
 /**
  * Telas do fluxo
@@ -20,11 +22,18 @@ MainWindow::MainWindow(QWidget *parent)
     , m_uiLogin(new Login(this))
     , m_uiPlayList(new UiPlaylist(this))
     , m_uiResultadoPesquisa(new ResultadoPesquisa(this))
+    , m_uiTocaPlaylist(new TocaPlaylist(this))
     , m_usuario(new Usuario)
     , api(new Api(this))
     , playlistController(new PlayListController())
     , pesquisaController(new PesquisaController(api))
     , currentPlaylist(new PlayList())
+    , m_musicaAtualTocando(nullptr)
+    , tocando{false}
+    , pausado{false}
+    , mediaPlaylist(new QMediaPlaylist())
+    , mediaPlayer(new QMediaPlayer(this))
+
 {
     ui->setupUi(this);
 
@@ -32,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->addWidget(m_uiLogin);
     ui->stackedWidget->addWidget(m_uiResultadoPesquisa);
     ui->stackedWidget->addWidget(m_uiPlayList);
+    ui->stackedWidget->addWidget(m_uiTocaPlaylist);
     m_uiResultadoPesquisa->hide();
     m_uiPlayList->hide();
 
@@ -114,8 +124,6 @@ MainWindow::MainWindow(QWidget *parent)
         reloadPlaylists();
     });
 
-
-
     //Ao pesquisar atualiza a lista de resultados...
     // A partir de la gerenciar quem entra na playlist ou tocar...
     connect(pesquisaController, &PesquisaController::on_pesquisaConcluida, [=](){
@@ -133,6 +141,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     });
 
+    //Ao verificar que tem evento para tocar musica, atualiza e toca a musica localmente.
+    connect(m_uiTocaPlaylist, &TocaPlaylist::on_playCurrentMusica, [&](const int playlistId, Musica *musica, const int rowIdx){
+        if(playlistId == currentPlaylist->getId()){
+            m_musicaAtualTocando = musica;
+            preencheMusicaAtual(m_musicaAtualTocando);
+            mediaPlaylist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);
+            mediaPlaylist->setCurrentIndex(rowIdx);
+        }
+    });
 
     habilitaSeLogado();
 
@@ -234,6 +251,40 @@ void MainWindow::showPlaylist()
 }
 
 /**
+ * @brief MainWindow::showTocaPlaylist
+ * exibe a tela de tocar playlist com a selecao atual.
+ */
+void MainWindow::showTocaPlaylist()
+{
+    if(!ui->lvPlaylists->selectedItems().empty()){
+        currentPlaylist = playlistController->playlists().getPlaylistByName(ui->lvPlaylists->selectedItems().first()->text());
+        if(currentPlaylist != nullptr){
+            m_uiTocaPlaylist->setUsuario(m_usuario);
+            m_uiTocaPlaylist->setPlaylist(currentPlaylist);
+            ui->stackedWidget->setCurrentWidget(m_uiTocaPlaylist);
+
+            mediaPlayer->stop();
+            mediaPlaylist->clear();
+            std::for_each(std::begin(currentPlaylist->getMusicas()->getMusicas()),
+                          std::end(currentPlaylist->getMusicas()->getMusicas()), [&](Musica *musica){
+
+                mediaPlaylist->addMedia(QUrl(musica->previewUrl()));
+            });
+            mediaPlayer->setPlaylist(mediaPlaylist);
+            if(mediaPlaylist->mediaCount() > 0)
+                mediaPlaylist->setCurrentIndex(0);
+        }
+    }
+}
+
+void MainWindow::preencheMusicaAtual(Musica *musica)
+{
+    ui->lblMusicaAtual->setText(musica->nome());
+    ui->lblAlbumAtual->setText(musica->album());
+    ui->lblTotalTime->setText(musica->getDuracaoMinSec());
+}
+
+/**
  * @brief MainWindow::on_lvPlaylists_itemSelectionChanged
  *
  */
@@ -247,7 +298,9 @@ void MainWindow::on_lvPlaylists_itemSelectionChanged()
  */
 void MainWindow::on_btnPlayPlaylist_clicked()
 {
-    //ui_tocarPlaylist
+    showTocaPlaylist();
+    mediaPlaylist->setPlaybackMode(QMediaPlaylist::Sequential);
+    mediaPlayer->play();
 }
 
 /**
@@ -266,7 +319,8 @@ void MainWindow::on_lvPlaylists_clicked(const QModelIndex &index)
  */
 void MainWindow::on_lvPlaylists_doubleClicked(const QModelIndex &index)
 {
-    //ui_tocarPlaylist
+    if (index.row()> -1)
+        showTocaPlaylist();
 }
 
 /**

@@ -6,10 +6,14 @@
 #include "uilogin.h"
 #include "uiresultadopesquisa.h"
 #include "uiplaylist.h"
+#include "tocaplaylist.h"
 #include "Dao/usuario.h"
 #include "Api/api.h"
 #include "Controllers/playlistcontroller.h"
 #include "Controllers/pesquisacontroller.h"
+#include "Dao/musica.h"
+#include <QtMultimedia/QMediaPlaylist>
+#include <QtMultimedia/QMediaPlayer>
 
 namespace Ui {
 class MainWindow;
@@ -52,11 +56,14 @@ private:
     void reloadPlaylists();
     void habilitaSeLogado();
     void showPlaylist();
+    void showTocaPlaylist();
+    void preencheMusicaAtual(Musica *musica);
 
     Ui::MainWindow *ui;
     Login *m_uiLogin;
     UiPlaylist * m_uiPlayList;
     ResultadoPesquisa *m_uiResultadoPesquisa;
+    TocaPlaylist *m_uiTocaPlaylist;
 
     Usuario *m_usuario;
     Api *api;
@@ -64,6 +71,12 @@ private:
     PlayListController *playlistController;
     PesquisaController *pesquisaController;
     PlayList *currentPlaylist;
+    Musica *m_musicaAtualTocando;
+
+    bool tocando;
+    bool pausado;
+    QMediaPlaylist *mediaPlaylist;
+    QMediaPlayer *mediaPlayer;
 
 };
 
