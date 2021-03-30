@@ -15,19 +15,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \    
+SOURCES += \
+    tocaplaylist.cpp \
     main.cpp \
     mainwindow.cpp \
     uilogin.cpp \
     uiplaylist.cpp \
-    uiresultadopesquisa.cpp
+    uiresultadopesquisa.cpp \
+    widgetutil.cpp
 
 HEADERS += \
     MouseButtomSignaler.h \
     mainwindow.h \
+    tocaplaylist.h \
     uilogin.h \
     uiplaylist.h \
-    uiresultadopesquisa.h
+    uiresultadopesquisa.h \
+    widgetutil.h
 
 
 HEADERS += $$PWD/../src/Db/abstractdao.h \
@@ -69,6 +73,7 @@ INCLUDEPATH += $$DIR_INCLUDE
 
 FORMS += \
     mainwindow.ui \
+    tocaplaylist.ui \
     uilogin.ui \
     uiplaylist.ui \
     uiresultadopesquisa.ui

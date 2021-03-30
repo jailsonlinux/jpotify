@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QPoint>
 #include <QMenu>
+#include "widgetutil.h"
 
 /**
  * @brief ResultadoPesquisa::ResultadoPesquisa
@@ -78,18 +79,8 @@ void ResultadoPesquisa::on_clickAddNaPlaylist(QAction* action)
  */
 void ResultadoPesquisa::resizeEvent(QResizeEvent *event)
 {
-    constexpr int col0 = 60;
-    constexpr int col3 = 120;
-    constexpr int col4 = 1;
-    const int col1 = (this->width() - (col0-10 + col3)) / 2;
-    const int col2 = (this->width() - (col0-10 + col3)) / 2;
-
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Indice, col0); //idx
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Nome, col1); //nome
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Album, col2); //album
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Duracao, col3);  //tempo
-    ui->tabelaResultados->setColumnWidth(ColunasTabela::Key, col4);  //chave escondida
-    ui->tabelaResultados->setColumnHidden(ColunasTabela::Key, true);
+    //Devido a semelhança da pesquisa com a playlist do usuario, foi centralizado numa util..
+    WidgetUtil::resizeGrid(this->width(), ui->tabelaResultados);
     QWidget::resizeEvent(event);
 }
 
@@ -128,36 +119,6 @@ void ResultadoPesquisa::setTermo(const QString &termo)
  */
 void ResultadoPesquisa::preencheGrid()
 {
-    ui->tabelaResultados->clearContents();
-    ui->tabelaResultados->setRowCount(0);
-
-    std::for_each(std::begin(m_musicaList->getMusicas()), std::end(m_musicaList->getMusicas()), [=](Musica *musica){
-        ui->tabelaResultados->insertRow(ui->tabelaResultados->rowCount());
-//        qDebug() << "url imagem:" << musica->imagem();
-//        qDebug() << "musica key:" << musica->key();
-
-        //ToDo: Ler icones para Col 0...
-        QTableWidgetItem *itemIndice = new QTableWidgetItem(QString::number(ui->tabelaResultados->rowCount()).rightJustified(2, '0'));
-        itemIndice->setFlags(itemIndice->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Indice, itemIndice);
-
-
-        QTableWidgetItem *itemNome = new QTableWidgetItem(musica->nome());
-        itemNome->setFlags(itemNome->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem(ui->tabelaResultados->rowCount()-1, ColunasTabela::Nome, itemNome);
-
-        QTableWidgetItem *itemAlbum = new QTableWidgetItem(musica->album());
-        itemAlbum->setFlags(itemAlbum->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Album, itemAlbum);
-
-        QTableWidgetItem *itemDuracao = new QTableWidgetItem(musica->getDuracaoMinSec());
-        itemDuracao->setFlags(itemDuracao->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Duracao, itemDuracao);
-
-        //Esconde a chave aqui
-        QTableWidgetItem *itemChave = new QTableWidgetItem(musica->key());
-        itemChave->setFlags(itemChave->flags() &  ~Qt::ItemIsEditable);
-        ui->tabelaResultados->setItem( ui->tabelaResultados->rowCount()-1, ColunasTabela::Key, itemChave);
-    });
+    WidgetUtil::preencheGrid(ui->tabelaResultados, m_musicaList);
 }
 
