@@ -36,12 +36,8 @@ signals:
 
 private slots:
     void on_btnCancelar_clicked();
-
-
     void on_btnSalvar_clicked();
-
     void on_btnExcluir_clicked();
-
     void on_btnEditar_clicked();
 
 private:

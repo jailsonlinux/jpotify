@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>JPotify</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/resources/images/png/appico.png</normaloff>:/resources/images/png/appico.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1137,13 +1141,6 @@
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QLabel" name="lblInformacao">
-               <property name="text">
-                <string>1 click seleciona playlist; 2 clicks toca playlist.</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
            <item>
@@ -2112,6 +2109,13 @@
             <widget class="Line" name="lineSeparaPlaylist">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblInformacao">
+             <property name="text">
+              <string>1 click seleciona playlist; 2 clicks toca playlist.</string>
              </property>
             </widget>
            </item>

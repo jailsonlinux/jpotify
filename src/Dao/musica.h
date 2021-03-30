@@ -8,7 +8,7 @@ class Musica :public QObject
     Q_OBJECT
 public:
     explicit Musica();
-
+    ~Musica() = default;
     QString key() const;
     void setKey(const QString &key);
 

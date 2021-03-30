@@ -3,6 +3,7 @@
 #include <QObject>
 
 #include "musicalist.h"
+#include <QTime>
 
 class PlayList
 {
@@ -28,6 +29,9 @@ public:
 
     MusicaList* getMusicas();
     void setMusicas(MusicaList* &musicas);
+
+    QString getDuracaoToString();
+    QTime getDuracaoTotal();
 
 private:
     int m_id;

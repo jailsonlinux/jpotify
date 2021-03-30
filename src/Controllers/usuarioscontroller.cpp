@@ -33,6 +33,11 @@ void UsuariosController::setUsuarioAtual(Usuario *value)
     m_usuarioAtual = value;
 }
 
+/**
+ * @brief UsuariosController::getUsuarioByName
+ * @param nome
+ * @return um usuario encontrado pelo nome de cadastro de login.
+ */
 Usuario *UsuariosController::getUsuarioByName(const QString &nome)
 {
     return m_usuarios.getUsuarioByName(nome);
@@ -71,6 +76,10 @@ void UsuariosController::loadAll()
     }
 }
 
+/**
+ * @brief UsuariosController::clearAll
+ * limpar lista de users
+ */
 void UsuariosController::clearAll()
 {
     m_usuarios.clear();
@@ -84,7 +93,7 @@ void UsuariosController::clearAll()
 void UsuariosController::adicionaUsuario(Usuario *usuario)
 {
     UsuariosDao usuariosDao;
-    const QString nome = usuario->nome();
+
     if(usuariosDao.add(usuario)){        
         emit on_usuarioAdicionado();
         loadAll();

@@ -28,7 +28,7 @@ private:
     int m_playlistid;
     void createTable() override;
     bool readData(QSqlQuery &query, MusicaList *musicas);
-    QString getQueryStr(TypeQuery type);
-    QString getQueryStr(TypeQuery type, const QString key);
+    QString getQueryStr(const TypeQuery type);
+    QString getQueryStr(const TypeQuery type, const QString &key);
 };
 

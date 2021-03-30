@@ -6,11 +6,11 @@
  */
 Usuario::Usuario():
     m_id{0},
-    m_nome{QStringLiteral("")},
-    m_clientid{QStringLiteral("")},
-    m_secret{QStringLiteral("")},
-    m_access_token{QStringLiteral("")},    
-    m_api_token{QStringLiteral("")},
+    m_nome(QStringLiteral("")),
+    m_clientid(QStringLiteral("")),
+    m_secret(QStringLiteral("")),
+    m_access_token(QStringLiteral("")),
+    m_api_token(QStringLiteral("")),
     m_autologin{false}
 {
 

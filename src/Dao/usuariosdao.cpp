@@ -160,16 +160,16 @@ bool UsuariosDao::read(QSqlQuery &query, UsuarioList *usuarioslist)
     if (!exec) {
         qCritical() << "Erro tentando ler dados da tabela " << m_tablename << ". " << query.lastError().text();
     } else {
-        constexpr auto fieldId = 0;
-        constexpr auto fieldNome = 1;
-        constexpr auto fieldClientId = 2;
-        constexpr auto fieldSecret = 3;
-        constexpr auto fieldAcessToken = 4;
-        constexpr auto fieldAutoLogin = 5;
+        constexpr auto fieldId{0};
+        constexpr auto fieldNome{1};
+        constexpr auto fieldClientId{2};
+        constexpr auto fieldSecret{3};
+        constexpr auto fieldAcessToken{4};
+        constexpr auto fieldAutoLogin{5};
 
         usuarioslist->clear();
         while (query.next()) {
-            Usuario *user = new Usuario;
+            Usuario *user = new Usuario();
 
             user->setId(query.value(fieldId).toInt());
             user->setNome(query.value(fieldNome).toString());

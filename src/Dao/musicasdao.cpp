@@ -214,7 +214,7 @@ bool MusicasDao::readData(QSqlQuery &query, MusicaList *musicas)
 
         musicas->clear();
         while (query.next()) {
-            Musica *musica = new Musica;
+            Musica *musica = new Musica();
 
             musica->setKey(query.value(fieldKey).toString());
             musica->setPlaylistid(query.value(fieldPlaylistid).toInt());
@@ -240,7 +240,7 @@ bool MusicasDao::readData(QSqlQuery &query, MusicaList *musicas)
  * @param type
  * @return consulta SQL com todos os campos da tabela para as musicas da playlist.
  */
-QString MusicasDao::getQueryStr(AbstractDao::TypeQuery type)
+QString MusicasDao::getQueryStr(const AbstractDao::TypeQuery type)
 {
     QString queryStr(QStringLiteral("SELECT key, playlistid, nome, artista, album, duracao, ordem, track, previewUrl, imagem "));
     queryStr += QStringLiteral(" FROM %1  WHERE playlistid = %2 ").arg(m_tablename).arg(m_playlistid);
@@ -259,7 +259,7 @@ QString MusicasDao::getQueryStr(AbstractDao::TypeQuery type)
  * @return consulta SQL com todos os campos da tabel para o usuario da playlist,
  * aplicando a condição do identificador unico de uma musica da playlist.
  */
-QString MusicasDao::getQueryStr(AbstractDao::TypeQuery type, const QString key)
+QString MusicasDao::getQueryStr(const AbstractDao::TypeQuery type, const QString &key)
 {
     QString queryStr = getQueryStr(TypeQuery::All);
     if(type == TypeQuery::Id){

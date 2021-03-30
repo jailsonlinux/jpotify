@@ -1,4 +1,5 @@
 #include "playlist.h"
+#include <QTime>
 
 /**
  * @brief PlayList::PlayList
@@ -7,9 +8,9 @@
 PlayList::PlayList():
     m_id{0},
     m_userid{0},
-    m_nome(QStringLiteral("")),
-    m_descricao(QStringLiteral("")),
-    m_apiid(QStringLiteral(""))
+    m_nome(""),
+    m_descricao(""),
+    m_apiid("")
 {
 
 }
@@ -127,4 +128,25 @@ void PlayList::setMusicas(MusicaList *&musicas)
 {
     m_musicas.clear();
     m_musicas.addMusicas(musicas);
+}
+
+QString PlayList::getDuracaoToString()
+{
+    QTime inicio(0,0,0,0);
+    QTime total;
+    std::for_each(std::begin(m_musicas.getMusicas()), std::end(m_musicas.getMusicas()), [&](Musica *musica){
+       total = inicio.addMSecs(musica->duracao());
+    });
+
+    return total.toString("mm:ss");
+}
+
+QTime PlayList::getDuracaoTotal()
+{
+    QTime inicio(0,0,0,0);
+    std::for_each(std::begin(m_musicas.getMusicas()), std::end(m_musicas.getMusicas()), [&](Musica *musica){
+       inicio = inicio.addMSecs(musica->duracao());
+    });
+
+    return inicio;
 }

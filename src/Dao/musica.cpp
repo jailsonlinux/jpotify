@@ -1,17 +1,21 @@
 #include "musica.h"
 #include <QTime>
 
+/**
+ * @brief Musica::Musica
+ * representacao de um Track da api com sua relacao a uma playlist.
+ */
 Musica::Musica():
-    m_key{QStringLiteral("") },
+    m_key(""),
     m_playlistid{0},
-    m_nome{QStringLiteral("") },
-    m_artista{QStringLiteral("") },
-    m_album{QStringLiteral("") },
+    m_nome(""),
+    m_artista(""),
+    m_album(""),
     m_duracao{0},
     m_ordem{0},
-    m_track{QStringLiteral("") },
-    m_previewUrl{QStringLiteral("") },
-    m_imagem{QStringLiteral("") }
+    m_track(""),
+    m_previewUrl(""),
+    m_imagem("")
 {
 
 }
@@ -208,6 +212,10 @@ void Musica::setImagem(const QString &imagem)
     m_imagem = imagem;
 }
 
+/**
+ * @brief Musica::getDuracaoMinSec
+ * @return duracao formatada para o grid.
+ */
 QString Musica::getDuracaoMinSec()
 {
     QTime tempo(0,0,0,0);

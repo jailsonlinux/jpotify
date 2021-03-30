@@ -56,6 +56,11 @@ void MusicaList::addMusicas(MusicaList *musicas)
     m_musicas.append(musicas->getMusicas());
 }
 
+/**
+ * @brief MusicaList::getMusicaByName
+ * @param nome
+ * @return
+ */
 Musica *MusicaList::getMusicaByName(const QString &nome)
 {
     auto u = std::find_if(std::begin(m_musicas), std::end(m_musicas),
@@ -70,6 +75,11 @@ Musica *MusicaList::getMusicaByName(const QString &nome)
     return nullptr;
 }
 
+/**
+ * @brief MusicaList::getMusicaByKey
+ * @param key
+ * @return musica pela chave unica que identifica o recurso na api.
+ */
 Musica *MusicaList::getMusicaByKey(const QString key)
 {
     auto u = std::find_if(std::begin(m_musicas), std::end(m_musicas),
@@ -84,11 +94,19 @@ Musica *MusicaList::getMusicaByKey(const QString key)
     return nullptr;
 }
 
+/**
+ * @brief MusicaList::getMusicas
+ * @return
+ */
 QList<Musica *> MusicaList::getMusicas() const
 {
     return m_musicas;
 }
 
+/**
+ * @brief MusicaList::setMusicas
+ * @param musicas
+ */
 void MusicaList::setMusicas(const QList<Musica *> &musicas)
 {
     m_musicas = musicas;

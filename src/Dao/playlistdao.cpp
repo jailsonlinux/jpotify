@@ -12,8 +12,12 @@ PlaylistDao::PlaylistDao(const int userid) :
     createTable();
 }
 
-PlaylistDao::PlaylistDao():
+/**
+ * @brief PlaylistDao::PlaylistDao
+ */
+PlaylistDao::PlaylistDao():    
     m_tablename(QStringLiteral("playlist"))
+   ,m_userid{0}
 {
     createTable();
 }
@@ -211,7 +215,7 @@ bool PlaylistDao::readData(QSqlQuery &query, Playlists *playlists)
 
         playlists->clear();
         while (query.next()) {
-            PlayList *playlist = new PlayList;
+            PlayList *playlist = new PlayList();
 
             playlist->setId(query.value(fieldId).toInt());
             playlist->setUsuarioid(query.value(fieldUsuarioid).toInt());

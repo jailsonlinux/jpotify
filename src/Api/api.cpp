@@ -12,6 +12,11 @@
 #include <QProcess>
 #include <QTimer>
 
+/**
+ * @brief Api::Api
+ * @param parent
+ * Centraliza nessa unica classe, authenticação, token do usuario, token da api e buscas.
+ */
 Api::Api(QObject *parent):
     QObject(parent)
   //   m_NetManager(std::make_unique<QNetworkAccessManager>())
@@ -28,12 +33,20 @@ Api::~Api()
     //    m_NetManager->disconnect();
 }
 
+/**
+ * @brief Api::acessToken
+ * token do usuario logado, que permite pegar o token da api.
+ */
 void Api::acessToken()
 {
     qDebug() << "acessToken: true";
     emit on_acessToken(true);
 }
 
+/**
+ * @brief Api::precisaAutenticar
+ * @return verdadeiro,s e usuario com credenciais validas gerou o token dele.
+ */
 bool Api::precisaAutenticar()
 {
     m_jaAutenticado = (QDateTime::currentDateTime() < m_dtExpiraToken) &&
@@ -122,13 +135,18 @@ void Api::abrirLogin()
     QProcess *chromeProcess = new QProcess(this);
 
     chromeProcess->start(program, arguments);
-    chromeProcess->waitForStarted(15000);
+    constexpr int wait = 15000;
+    chromeProcess->waitForStarted(wait);
 
     //    chromeProcess->close();
     //    chromeProcess->kill();
 
 }
 
+/**
+ * @brief Api::finalizaServico
+ * encerra servidor local que escuta a url de resposta da api.
+ */
 void Api::finalizaServico()
 {
     if(m_servidor != nullptr)
@@ -137,6 +155,10 @@ void Api::finalizaServico()
     m_servidor.reset(nullptr);
 }
 
+/**
+ * @brief Api::getApiToken
+ * captura o token da api apos registro do usuario ser validado.
+ */
 void Api::getApiToken(){
 
     if (m_usuario.get()->access_token().isEmpty()) {
@@ -193,6 +215,12 @@ void Api::getApiToken(){
     emit on_Erro(QStringLiteral("Error ao ler mensagem"));
 }
 
+
+/**
+ * @brief Api::montaRequisicao
+ * @param uri
+ * @return request pre confiogurado para demais chamadas a api.
+ */
 QNetworkRequest Api::montaRequisicao(const QString &uri)
 {
     QUrl url("https://api.spotify.com/v1/" + uri);
@@ -205,7 +233,11 @@ QNetworkRequest Api::montaRequisicao(const QString &uri)
     return request;
 }
 
-
+/**
+ * @brief Api::pesquisaMusicas
+ * @param termo
+ * @return Objeto json de resposta a pesquisa de musicas.
+ */
 QJsonObject Api::pesquisaMusicas(const QString &termo)
 {
     const QString resource = QStringLiteral("search?q=%1&type=track").arg(termo);
@@ -225,31 +257,58 @@ QJsonObject Api::pesquisaMusicas(const QString &termo)
     return json.object();
 }
 
+/**
+ * @brief Api::getClientId
+ * @return cliente associado a isntancia da api.
+ */
 QString Api::getClientId() const
 {
     return m_usuario.get()->clientid();
 }
 
+/**
+ * @brief Api::setClientId
+ * @param clientId
+ * define cliente para uso da api.
+ */
 void Api::setClientId(const QString &clientId)
 {
     m_usuario.get()->setClientid(clientId);
 }
 
+/**
+ * @brief Api::getClientSecret
+ * @return dados para autenticacao do user
+ */
 QString Api::getClientSecret() const
 {
     return m_usuario.get()->secret();
 }
 
+/**
+ * @brief Api::setClientSecret
+ * @param clientSecret
+ * autenticacao do user
+ */
 void Api::setClientSecret(const QString &clientSecret)
 {
     m_usuario.get()->setSecret(clientSecret);
 }
 
+/**
+ * @brief Api::getAuthorizationCode
+ * @return codigo de autorizacao
+ */
 QString Api::getAuthorizationCode() const
 {
     return m_usuario.get()->access_token();
 }
 
+/**
+ * @brief Api::setAuthorizationCode
+ * @param authorizationCode
+ * codigo de autorizacao
+ */
 void Api::setAuthorizationCode(const QString &authorizationCode)
 {
     m_usuario.get()->setAccess_token(authorizationCode);
@@ -271,14 +330,24 @@ QString Api::getAcessTokenn() const
 void Api::setAcessTokenn(const QString &acessToken)
 {
     m_apiacess_token = acessToken;
-    m_usuario->setApi_token(m_apiacess_token);
+    m_usuario.get()->setApi_token(m_apiacess_token);
 }
 
+/**
+ * @brief Api::getTokenExpires
+ * @return tempo para expirar o token da api obtido.
+ * ToDo: Fazer renovação de token
+ */
 QDateTime Api::getTokenExpires() const
 {
     return m_dtExpiraToken;
 }
 
+/**
+ * @brief Api::setTokenExpires
+ * @param tokenExpires
+ * * ToDo: Fazer renovação de token
+ */
 void Api::setTokenExpires(const QDateTime &tokenExpires)
 {
     if (m_dtExpiraToken == tokenExpires)
@@ -315,23 +384,38 @@ QString Api::getUrlDeAutenticacao()
             .arg(m_usuario.get()->clientid(), m_redirectUrl, scopes.join(QStringLiteral("%20")));
 }
 
+/**
+ * @brief Api::getApiacess_token
+ * @return token da api adquirido no final do fluxo de autenticacao.
+ */
 QString Api::getApiacess_token() const
 {
     return m_apiacess_token;
 }
 
+/**
+ * @brief Api::setApiacess_token
+ * @param apiacess_token
+ */
 void Api::setApiacess_token(const QString &apiacess_token)
 {
     m_apiacess_token = apiacess_token;
 }
 
+/**
+ * @brief Api::setUsuario
+ * @param usuario
+ */
 void Api::setUsuario( Usuario *usuario)
 {
     m_usuario.reset(usuario);
 }
 
-
+/**
+ * @brief Api::getToken
+ * @return
+ */
 QString Api::getToken()
 {
-    return m_usuario->access_token();
+    return m_usuario.get()->access_token();
 }

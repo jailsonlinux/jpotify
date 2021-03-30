@@ -20,16 +20,14 @@ SOURCES += \
     mainwindow.cpp \
     uilogin.cpp \
     uiplaylist.cpp \
-    uiresultadopesquisa.cpp \
-    uiusuarios.cpp
+    uiresultadopesquisa.cpp
 
 HEADERS += \
     MouseButtomSignaler.h \
     mainwindow.h \
     uilogin.h \
     uiplaylist.h \
-    uiresultadopesquisa.h \
-    uiusuarios.h
+    uiresultadopesquisa.h
 
 
 HEADERS += $$PWD/../src/Db/abstractdao.h \
@@ -73,8 +71,7 @@ FORMS += \
     mainwindow.ui \
     uilogin.ui \
     uiplaylist.ui \
-    uiresultadopesquisa.ui \
-    uiusuarios.ui
+    uiresultadopesquisa.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

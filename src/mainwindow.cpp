@@ -66,7 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
 
         //Atualizar playlists
         m_usuario = m_uiLogin->getUsuario();
-        reloadPlaylists();
+        playlistController->setUsuario(m_usuario);
+        playlistController->loadAll();
 
         //exibir tela de buscas
         ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
@@ -83,38 +84,53 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Ao cancelar, volta para a tela de busca.
     connect(m_uiPlayList, &UiPlaylist::on_cancelarPlaylist, [&]() {
-          ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
+        ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     });
 
     //Ao salvar pede ao controler para persistir. E atualizar a lista de playlists.
     connect(m_uiPlayList, &UiPlaylist::on_salvarPlayList, [&](PlayList *playlist){
-          playlistController->setUsuario(m_usuario);
-          playlistController->addicionarPlaylist(playlist);
-          ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
+        playlistController->setUsuario(m_usuario);
+        playlistController->addicionarPlaylist(playlist);
+        ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     });
 
     //Ao salvar pede ao controler para persistir. E atualizar a lista de playlists.
     connect(m_uiPlayList, &UiPlaylist::on_excluirPlayList, [&](PlayList *playlist) {
-          playlistController->setUsuario(m_usuario);
-          playlistController->removerPlaylist(playlist);
-          reloadPlaylists();
-          ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
+        playlistController->setUsuario(m_usuario);
+        playlistController->removerPlaylist(playlist);
+        reloadPlaylists();
+        ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
     });
 
 
     //Ao remover, inserir, atualizar,  a lista de playlists da tela é atualizada.
     connect(playlistController, &PlayListController::on_playlistsChanged, [=](){
-       reloadPlaylists();
+        playlistController->setUsuario(m_usuario);
+        playlistController->loadAll();
     });
+
+    //Atualiza lsitview e lista de playlists...
+    connect(playlistController, &PlayListController::on_playlistsCarregado, [=](){
+        reloadPlaylists();
+    });
+
+
 
     //Ao pesquisar atualiza a lista de resultados...
     // A partir de la gerenciar quem entra na playlist ou tocar...
-    connect(pesquisaController, &PesquisaController::on_pesquisaConcluida, [=](){        
-       ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
-       m_uiResultadoPesquisa->setMusicaList(pesquisaController->musicaList());
-       m_uiResultadoPesquisa->setTermo(ui->edtSearch->text().trimmed());
-       m_uiResultadoPesquisa->setPlaylists(playlistController->playlists());
-       ui->edtSearch->clear();
+    connect(pesquisaController, &PesquisaController::on_pesquisaConcluida, [=](){
+        ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
+        m_uiResultadoPesquisa->setMusicaList(pesquisaController->musicaList());
+        m_uiResultadoPesquisa->setTermo(ui->edtSearch->text().trimmed());
+        m_uiResultadoPesquisa->setPlaylists(playlistController->playlists());
+        ui->edtSearch->clear();
+    });
+
+    //Ao adicionar uma musica escolhida da pesquisa numa playlist, o controler notifica atualizar as listas.
+    connect(m_uiResultadoPesquisa, &ResultadoPesquisa::on_addMusicaNaPlaylist, [&](const int playlistId, Musica *musica){
+        //qDebug() << "Musica para add na playlist: " << playlistId << " Musica: " << musica->nome();
+        playlistController->adicionarMusicaAPlaylist(playlistId, musica);
+
     });
 
 
@@ -156,8 +172,7 @@ void MainWindow::on_btnBuscar_clicked()
  */
 void MainWindow::on_btnCriarPlaylist_clicked()
 {
-
-    PlayList * new_playlist = new PlayList();
+    PlayList *new_playlist = new PlayList();
     new_playlist->setUsuarioid(m_usuario->id());
     m_uiPlayList->setQtdMusicas(0);
     m_uiPlayList->setUsuario(m_usuario);
@@ -165,6 +180,10 @@ void MainWindow::on_btnCriarPlaylist_clicked()
     ui->stackedWidget->setCurrentWidget(m_uiPlayList);
 }
 
+/**
+ * @brief MainWindow::swapLoginToSearch
+ * alterna ente login e pesquisa.
+ */
 void MainWindow::swapLoginToSearch()
 {
     ui->stackedWidget->setCurrentWidget(m_uiResultadoPesquisa);
@@ -172,29 +191,39 @@ void MainWindow::swapLoginToSearch()
     m_uiResultadoPesquisa->show();
 }
 
+/**
+ * @brief MainWindow::reloadPlaylists
+ * recarrega playlist e
+ */
 void MainWindow::reloadPlaylists()
 {
     ui->lvPlaylists->clear();
-    playlistController->setUsuario(m_usuario);
-    playlistController->loadAll();
     std::for_each(std::begin(playlistController->playlists().getPlaylists()), std::end(playlistController->playlists().getPlaylists()),
                   [=](PlayList *playlist){
         ui->lvPlaylists->addItem(playlist->nome());
     });
 }
 
+/**
+ * @brief MainWindow::habilitaSeLogado
+ * antes do login, icone e botoes desligados.
+ */
 void MainWindow::habilitaSeLogado()
 {
     const bool logado  = api->getAcessTokenn().size() > 0;
-    ui->btnCriarPlaylist->setEnabled(logado);    
+    ui->btnCriarPlaylist->setEnabled(logado);
     ui->btnPlayPlaylist->setEnabled(logado);
     ui->btnBuscar->setEnabled(logado);
     ui->lvPlaylists->setEnabled(logado || ui->lvPlaylists->count() == 0);
 }
 
+/**
+ * @brief MainWindow::showPlaylist
+ * exibe playlists atualizadas no listview.
+ */
 void MainWindow::showPlaylist()
 {
-    if(ui->lvPlaylists->selectedItems().size()>0){
+    if(!ui->lvPlaylists->selectedItems().empty()){
         currentPlaylist = playlistController->playlists().getPlaylistByName(ui->lvPlaylists->selectedItems().first()->text());
         if(currentPlaylist != nullptr){
             m_uiPlayList->setUsuario(m_usuario);
@@ -204,28 +233,46 @@ void MainWindow::showPlaylist()
     }
 }
 
-
+/**
+ * @brief MainWindow::on_lvPlaylists_itemSelectionChanged
+ *
+ */
 void MainWindow::on_lvPlaylists_itemSelectionChanged()
 {
     showPlaylist();
 }
 
+/**
+ * @brief MainWindow::on_btnPlayPlaylist_clicked
+ */
 void MainWindow::on_btnPlayPlaylist_clicked()
 {
     //ui_tocarPlaylist
 }
 
+/**
+ * @brief MainWindow::on_lvPlaylists_clicked
+ * @param index
+ */
 void MainWindow::on_lvPlaylists_clicked(const QModelIndex &index)
 {
     if(index.row() > 0)
         showPlaylist();
 }
 
+/**
+ * @brief MainWindow::on_lvPlaylists_doubleClicked
+ * @param index
+ */
 void MainWindow::on_lvPlaylists_doubleClicked(const QModelIndex &index)
 {
     //ui_tocarPlaylist
 }
 
+/**
+ * @brief MainWindow::on_edtSearch_returnPressed
+ * Ao dar enter na pesquisa, executa no controler e atualiza a tabela de resultados.
+ */
 void MainWindow::on_edtSearch_returnPressed()
 {
     pesquisaController->pesquisarMusicas(ui->edtSearch->text().trimmed());

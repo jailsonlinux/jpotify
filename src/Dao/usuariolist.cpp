@@ -107,11 +107,19 @@ Usuario *UsuarioList::getUsuarioByClientId(const QString &clientid)
     return nullptr;
 }
 
+/**
+ * @brief UsuarioList::getUsuarios
+ * @return
+ */
 QList<Usuario *> UsuarioList::getUsuarios() const
 {
     return m_usuarios;
 }
 
+/**
+ * @brief UsuarioList::setUsuarios
+ * @param usuarios
+ */
 void UsuarioList::setUsuarios(const QList<Usuario *> &usuarios)
 {
     m_usuarios.clear();

@@ -14,5 +14,6 @@
         <file>resources/images/png/logo.png</file>
         <file>resources/images/png/delplaylist.png</file>
         <file>resources/images/png/userlogado.png</file>
+        <file>resources/images/png/appico.png</file>
     </qresource>
 </RCC>

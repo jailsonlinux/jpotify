@@ -1,6 +1,10 @@
 #include "pesquisacontroller.h"
 
-
+/**
+ * @brief PesquisaController::PesquisaController
+ * @param api
+ * recebe instancia da api logada e com ela gerencia lista de musicas da pesquisa recente.
+ */
 PesquisaController::PesquisaController(Api *api):
     m_api(api)
   ,m_musicaList(new MusicaList)
@@ -8,6 +12,11 @@ PesquisaController::PesquisaController(Api *api):
 
 }
 
+/**
+ * @brief PesquisaController::pesquisarMusicas
+ * @param termo
+ * executa a busca pela API a determinado termo...no momento apenas tracks.
+ */
 void PesquisaController::pesquisarMusicas(const QString &termo)
 {
     m_musicaList->clear();
@@ -32,6 +41,7 @@ void PesquisaController::pesquisarMusicas(const QString &termo)
             musica->setImagem(map[QStringLiteral("album")].toMap()[QStringLiteral("images")].toList().last().toMap()[QStringLiteral("url")].toString());
             musica->setAlbum(map[QStringLiteral("album")].toMap()[QStringLiteral("name")].toString());
             musica->setDuracao(map[QStringLiteral("duration_ms")].toInt());
+            musica->setKey(map[QStringLiteral("id")].toString());
 
             m_musicaList->addMusica(musica);
         }
@@ -40,6 +50,10 @@ void PesquisaController::pesquisarMusicas(const QString &termo)
     emit on_pesquisaConcluida();
 }
 
+/**
+ * @brief PesquisaController::musicaList
+ * @return lista de musicas da ultima busca.
+ */
 MusicaList *PesquisaController::musicaList() const
 {
     return m_musicaList;
