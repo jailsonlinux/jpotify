@@ -5,6 +5,7 @@
 #include <QtMultimedia/QMediaPlaylist>
 #include <QtMultimedia/QMediaPlayer>
 #include <QUrl>
+#include <QSlider>
 
 /**
  * Telas do fluxo
@@ -150,6 +151,12 @@ MainWindow::MainWindow(QWidget *parent)
             mediaPlaylist->setCurrentIndex(rowIdx);
         }
     });
+
+    //Progresso
+    connect(mediaPlayer, &QMediaPlayer::positionChanged, ui->playbar, &QSlider::setValue);
+    connect(mediaPlayer, &QMediaPlayer::durationChanged, ui->playbar, &QSlider::setMaximum);
+    connect(mediaPlayer, &QMediaPlayer::mediaChanged, [&](){ui->playbar->setValue(0);});
+
 
     habilitaSeLogado();
 
