@@ -9,6 +9,8 @@ Tocar samplers da lista.
 ```
 Build in Qt 5.15.2 , SO Linux.
 ```
+<<<<<<< HEAD
+=======
 
 #### Testes
 ![Alt text](./blob/tests1.png?raw=true "Testes")
@@ -20,3 +22,4 @@ Build in Qt 5.15.2 , SO Linux.
 ![Alt text](./blob/playlistAdd.png?raw=true "add")
 ![Alt text](./blob/tocaplaylist.png?raw=true "tocando")
 
+>>>>>>> f8b30bd2f5f2064c79875c379bb1c66358181544

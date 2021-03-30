@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/images/png/playBtn42.png</file>
+        <file>resources/images/png/play42.png</file>
+        <file>resources/images/png/play16.png</file>
+        <file>resources/images/png/back.png</file>
+        <file>resources/images/png/next.png</file>
+        <file>resources/images/png/playlist.png</file>
+        <file>resources/images/png/user.png</file>
+        <file>resources/images/png/new_playlist.png</file>
+        <file>resources/images/png/biblioteca.png</file>
+        <file>resources/images/png/buscar.png</file>
+        <file>resources/images/png/home.png</file>
+        <file>resources/images/png/logo.png</file>
+        <file>resources/images/png/delplaylist.png</file>
+        <file>resources/images/png/userlogado.png</file>
+        <file>resources/images/png/appico.png</file>
+        <file>resources/images/png/pause.png</file>
+    </qresource>
+</RCC>

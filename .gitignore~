@@ -50,7 +50,10 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+<<<<<<< HEAD
+=======
 
 # sqlite
 *.db
 
+>>>>>>> f8b30bd2f5f2064c79875c379bb1c66358181544
