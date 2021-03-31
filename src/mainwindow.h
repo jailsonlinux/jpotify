@@ -52,6 +52,10 @@ private slots:
 
     void on_btnPlayPause_clicked();
 
+    void on_btnBack_clicked();
+
+    void on_btnNext_clicked();
+
 private:
 
     void swapLoginToSearch();

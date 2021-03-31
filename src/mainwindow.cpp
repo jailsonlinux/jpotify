@@ -359,3 +359,18 @@ void MainWindow::on_btnPlayPause_clicked()
         mediaPlayer->pause();
     }
 }
+
+void MainWindow::on_btnBack_clicked()
+{
+    m_musicaAtualTocando = currentPlaylist->getMusicas()->getMusicas().at(mediaPlaylist->currentIndex());
+    preencheMusicaAtual(m_musicaAtualTocando);
+    mediaPlaylist->previous();
+}
+
+void MainWindow::on_btnNext_clicked()
+{
+    m_musicaAtualTocando = currentPlaylist->getMusicas()->getMusicas().at(mediaPlaylist->currentIndex());
+    preencheMusicaAtual(m_musicaAtualTocando);
+    mediaPlaylist->next();
+
+}
